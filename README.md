@@ -1,0 +1,26 @@
+# NauticMixxx Web
+
+Landing de lanzamiento de NauticMixxx. Está construida como una aplicación Vite + React independiente para publicarse en `nauticmixxx.nauticboy.top`.
+
+## Desarrollo
+
+```bash
+npm install
+npm run dev
+```
+
+## Contenido reemplazable
+
+- `public/app-icon.svg`: icono conceptual temporal.
+- `src/App.tsx`, componente `MixerPreview`: demo visual temporal de la interfaz.
+- `public/media/`: lugar preparado para futuras capturas y videos.
+- `index.html`: canonical, metadatos sociales y dominio de producción.
+- `src/App.tsx`, constante `CONTACT_EMAIL`: dirección que recibe solicitudes de acceso.
+
+El formulario no simula una base de datos: prepara un email real en el cliente de correo del visitante. Cuando exista un servicio de newsletter o waitlist, el manejador `handleEarlyAccess` es el punto de integración.
+
+## Publicación
+
+El workflow `.github/workflows/deploy.yml` compila y publica automáticamente el contenido de `dist` en GitHub Pages después de cada push a `main`. El archivo `public/CNAME` configura el dominio `nauticmixxx.nauticboy.top`.
+
+En el proveedor DNS de `nauticboy.top`, el subdominio debe tener un registro `CNAME` que apunte a `nauticstudio.github.io`.
