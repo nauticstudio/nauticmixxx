@@ -2194,3 +2194,507 @@ footer > a:last-child {
   .download-card { padding: 24px; }
   .footer-top > p { display: block; }
 }
+
+/* XDJ-RX3 color system — black hardware, cyan navigation, blue state, orange audio */
+:root {
+  color-scheme: dark;
+  color: #f2f3f4;
+  background: #050607;
+  --ink: #f2f3f4;
+  --ink-muted: #969ba0;
+  --paper: #050607;
+  --paper-bright: #101214;
+  --line: rgba(255, 255, 255, 0.115);
+  --orange: #ff9500;
+  --orange-deep: #ff9d00;
+  --orange-soft: #ffd06a;
+  --blue: #0a86df;
+  --blue-bright: #199fff;
+  --cyan: #00b6c8;
+  --graphite: #17191b;
+  --panel: #101214;
+}
+
+body {
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 88% 8%, rgba(10, 134, 223, 0.16), transparent 29rem),
+    radial-gradient(circle at 5% 62%, rgba(255, 149, 0, 0.065), transparent 34rem),
+    linear-gradient(180deg, #050607 0%, #090a0b 48%, #050607 100%);
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  pointer-events: none;
+  opacity: 0.28;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, #000, transparent 78%);
+}
+
+::selection {
+  color: #fff;
+  background: var(--blue);
+}
+
+:focus-visible {
+  outline-color: var(--cyan);
+}
+
+.grain {
+  opacity: 0.055;
+  mix-blend-mode: soft-light;
+}
+
+.site-header {
+  border-color: rgba(0, 182, 200, 0.2);
+  background: rgba(8, 10, 11, 0.82);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06),
+    0 18px 48px rgba(0, 0, 0, 0.42),
+    inset 0 -1px rgba(0, 182, 200, 0.08);
+}
+
+.brand {
+  color: #f5f7f8;
+}
+
+.brand img {
+  box-shadow: 0 5px 18px rgba(0, 134, 223, 0.2);
+}
+
+.site-header nav,
+.language-button {
+  color: #878d92;
+}
+
+.site-header nav a:hover,
+.site-footer a:hover {
+  color: var(--cyan);
+}
+
+.header-cta {
+  color: #fff;
+  border: 1px solid rgba(25, 159, 255, 0.55);
+  background: linear-gradient(180deg, #118fe9, #0874c4);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 8px 24px rgba(10, 134, 223, 0.22);
+}
+
+.header-cta:hover,
+.button--primary:hover {
+  box-shadow: 0 10px 30px rgba(10, 134, 223, 0.34);
+}
+
+.hero::before {
+  position: absolute;
+  top: 12%;
+  left: 39%;
+  width: 1px;
+  height: 63%;
+  content: "";
+  background: linear-gradient(transparent, rgba(0, 182, 200, 0.24), transparent);
+}
+
+.hero-glow {
+  background:
+    radial-gradient(circle at 38% 38%, rgba(10, 134, 223, 0.2), transparent 34%),
+    radial-gradient(circle at 64% 58%, rgba(255, 149, 0, 0.11), transparent 45%);
+}
+
+.eyebrow,
+.section-eyebrow {
+  color: var(--cyan);
+}
+
+.eyebrow {
+  border-color: rgba(0, 182, 200, 0.28);
+  background: rgba(0, 182, 200, 0.055);
+  box-shadow: inset 3px 0 var(--cyan);
+}
+
+.hero h1 em {
+  color: var(--orange);
+  text-shadow: 0 0 38px rgba(255, 149, 0, 0.13);
+}
+
+.hero--release .hero-lead {
+  color: #d3d6d8;
+}
+
+.hero-detail,
+.hero-copy > p,
+.hero-meta,
+.clarity-heading > p:last-child,
+.download-heading > p,
+.clarity-card p,
+.feature-card > p,
+.download-note,
+.faq-list details p {
+  color: var(--ink-muted);
+}
+
+.button--primary {
+  color: #fff;
+  background: linear-gradient(180deg, #118fe9, #0874c4);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 9px 25px rgba(10, 134, 223, 0.2);
+}
+
+.button--quiet {
+  color: #d3d6d8;
+  border-color: rgba(255, 255, 255, 0.13);
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.button--quiet:hover {
+  color: #fff;
+  border-color: rgba(0, 182, 200, 0.35);
+  background: rgba(0, 182, 200, 0.08);
+}
+
+.hero-meta i,
+.window-state i {
+  background: var(--cyan);
+  box-shadow: 0 0 0 4px rgba(0, 182, 200, 0.11), 0 0 14px rgba(0, 182, 200, 0.42);
+}
+
+.hero-meta small,
+.preview-caption {
+  color: #73797e;
+}
+
+.preview-caption span:last-child {
+  color: var(--orange);
+}
+
+.mixer-shell {
+  color: #f2f3f4;
+  border-color: rgba(0, 182, 200, 0.36);
+  background: #070809;
+  box-shadow:
+    0 50px 110px rgba(0, 0, 0, 0.56),
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 0 52px rgba(10, 134, 223, 0.08),
+    inset 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.window-bar {
+  border-color: rgba(0, 182, 200, 0.14);
+  background: linear-gradient(#202326, #16181a);
+}
+
+.traffic-lights i:first-child { background: #ff3b30; }
+.traffic-lights i:nth-child(2) { background: var(--orange); }
+.traffic-lights i:last-child { background: var(--cyan); }
+
+.mixer-toolbar {
+  border-color: rgba(255, 255, 255, 0.07);
+  background: #101214;
+}
+
+.transport .transport-play {
+  border-color: #1599f6;
+  background: var(--blue);
+  box-shadow: 0 0 14px rgba(10, 134, 223, 0.32);
+}
+
+.tempo span {
+  color: var(--orange);
+}
+
+.waveform {
+  border-color: rgba(0, 182, 200, 0.13);
+  background: #020303;
+}
+
+.waveform-grid {
+  background-image:
+    linear-gradient(rgba(0, 182, 200, 0.075) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+}
+
+.wave-bars i {
+  background: linear-gradient(to top, #ff7100, #ffae00 66%, #fff 67% 76%, #0b8ff0 77%);
+  box-shadow: 0 0 10px rgba(255, 149, 0, 0.2);
+}
+
+.wave-bars i:nth-child(3n) {
+  background: linear-gradient(to top, #087ee0, #3ba8ff 70%, #fff 71%);
+  box-shadow: 0 0 10px rgba(10, 134, 223, 0.28);
+}
+
+.wave-bars i:nth-child(5n) {
+  background: linear-gradient(to top, #fff, #d9e9f4 36%, #ff9800 38%);
+}
+
+.marker {
+  color: #d8dcdf;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: #24272a;
+}
+
+.marker-two {
+  color: #06131b;
+  border-color: var(--cyan);
+  background: var(--cyan);
+}
+
+.session-panel,
+.channel,
+.master-channel {
+  background-color: #101214;
+}
+
+.session-panel {
+  border-right-color: rgba(0, 182, 200, 0.16);
+}
+
+.session-stat:first-of-type {
+  color: var(--cyan);
+}
+
+.mini-spectrum i {
+  background: linear-gradient(to top, var(--blue), var(--orange));
+}
+
+.channel {
+  border-right-color: rgba(255, 255, 255, 0.075);
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.018), transparent 46%, rgba(0, 0, 0, 0.22));
+}
+
+.channel-pan {
+  background: #1b1e20;
+}
+
+.channel-pan i {
+  background: var(--cyan);
+}
+
+.channel-meter i {
+  background: linear-gradient(to top, #0c86e0 62%, #ff9b00 82%, #ff3b30);
+}
+
+.channel-controls button[aria-pressed="true"] {
+  border-color: var(--blue);
+  background: var(--blue);
+}
+
+.master-channel {
+  background: #17191b;
+}
+
+.master-orbit {
+  border-top-color: var(--orange);
+  border-right-color: var(--blue);
+}
+
+.master-meter i { background: var(--blue); }
+.master-meter .hot { background: var(--orange); }
+.master-meter .hot:last-child { background: #ff3b30; }
+
+.trust-row span {
+  color: #abb0b4;
+  border-color: rgba(255, 255, 255, 0.11);
+  background: rgba(15, 17, 19, 0.8);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.035);
+}
+
+.trust-row svg {
+  color: var(--cyan);
+}
+
+.clarity,
+.faq {
+  border-color: rgba(0, 182, 200, 0.15);
+}
+
+.section-number {
+  color: var(--orange);
+}
+
+.clarity-card {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(145deg, rgba(24, 27, 29, 0.94), rgba(11, 13, 14, 0.96));
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.055), 0 22px 55px rgba(0, 0, 0, 0.16);
+}
+
+.clarity-card::before {
+  position: absolute;
+  top: 0;
+  right: 32px;
+  left: 32px;
+  height: 2px;
+  content: "";
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+}
+
+.clarity-card:nth-child(2)::before { background: linear-gradient(90deg, transparent, var(--blue), transparent); }
+.clarity-card:nth-child(3)::before { background: linear-gradient(90deg, transparent, var(--orange), transparent); }
+
+.clarity-card > span,
+.feature-card > svg {
+  color: var(--cyan);
+  border: 1px solid rgba(0, 182, 200, 0.2);
+  background: rgba(0, 182, 200, 0.075);
+}
+
+.clarity-card:nth-child(2) > span { color: var(--blue-bright); border-color: rgba(10, 134, 223, 0.24); background: rgba(10, 134, 223, 0.09); }
+.clarity-card:nth-child(3) > span { color: var(--orange); border-color: rgba(255, 149, 0, 0.24); background: rgba(255, 149, 0, 0.085); }
+
+.feature-card {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(145deg, #131618, #0b0d0e);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.feature-card--accent {
+  border-color: rgba(10, 134, 223, 0.55);
+  background:
+    radial-gradient(circle at 85% 5%, rgba(10, 134, 223, 0.28), transparent 45%),
+    linear-gradient(145deg, #10202d, #080b0e 68%);
+}
+
+.feature-card--accent > svg {
+  color: #fff;
+  border-color: var(--blue);
+  background: var(--blue);
+  box-shadow: 0 0 24px rgba(10, 134, 223, 0.22);
+}
+
+.feature-card-top {
+  color: #747b80;
+}
+
+.feature-card-top code {
+  color: var(--cyan);
+  border-color: rgba(0, 182, 200, 0.28);
+}
+
+.feature-card:nth-child(2) > svg { color: var(--orange); border-color: rgba(255, 149, 0, 0.24); background: rgba(255, 149, 0, 0.08); }
+.feature-card:nth-child(3) > svg { color: var(--blue-bright); border-color: rgba(10, 134, 223, 0.24); background: rgba(10, 134, 223, 0.08); }
+
+.usb-contract {
+  border: 1px solid rgba(0, 182, 200, 0.25);
+  background:
+    linear-gradient(rgba(0, 182, 200, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 182, 200, 0.028) 1px, transparent 1px),
+    radial-gradient(circle at 25% 48%, rgba(10, 134, 223, 0.17), transparent 28%),
+    #07090a;
+  background-size: 32px 32px, 32px 32px, auto, auto;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.36), inset 0 1px rgba(255, 255, 255, 0.045);
+}
+
+.usb-stick {
+  border-color: rgba(0, 182, 200, 0.32);
+  background: linear-gradient(145deg, #24292c, #0b0d0e 68%);
+  box-shadow: 0 38px 80px rgba(0, 0, 0, 0.58), inset 0 1px rgba(255, 255, 255, 0.1), 0 0 42px rgba(10, 134, 223, 0.12);
+}
+
+.usb-stick svg { color: var(--blue-bright); }
+.usb-stick i { color: var(--cyan); }
+.usb-orbit { border-color: rgba(0, 182, 200, 0.25); }
+.usb-orbit::before { border-color: rgba(10, 134, 223, 0.18); }
+.usb-orbit::after { border-color: rgba(255, 149, 0, 0.17); }
+.usb-orbit i { background: var(--cyan); box-shadow: 0 0 20px var(--cyan); }
+.usb-orbit i:nth-child(2) { background: var(--blue); box-shadow: 0 0 20px var(--blue); }
+.usb-orbit i:nth-child(3) { background: var(--orange); box-shadow: 0 0 20px var(--orange); }
+.usb-contract-copy li svg { color: var(--cyan); }
+
+.download-card {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(145deg, rgba(23, 26, 28, 0.96), rgba(10, 12, 13, 0.96));
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.045);
+}
+
+.download-card--source {
+  border-color: rgba(10, 134, 223, 0.5);
+  background:
+    radial-gradient(circle at 90% 0%, rgba(10, 134, 223, 0.2), transparent 42%),
+    #0b1014;
+}
+
+.download-platform > svg {
+  color: var(--cyan);
+}
+
+.download-card--source .download-platform > svg {
+  color: var(--blue-bright);
+}
+
+.download-platform > span,
+.download-meta {
+  color: #747b80;
+}
+
+.download-disabled {
+  color: #777d81;
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.download-active {
+  color: #fff;
+  background: linear-gradient(180deg, #118fe9, #0874c4);
+  box-shadow: 0 8px 26px rgba(10, 134, 223, 0.2);
+}
+
+.download-active:hover {
+  background: linear-gradient(180deg, #20a2ff, #0a82dc);
+}
+
+.release-honesty {
+  color: #aeb3b7;
+  border-color: rgba(0, 182, 200, 0.2);
+  background: rgba(0, 182, 200, 0.055);
+}
+
+.release-honesty svg { color: var(--cyan); }
+
+.faq-list details {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.faq-list summary span {
+  color: var(--orange);
+}
+
+.faq-list summary svg {
+  color: var(--cyan);
+}
+
+.site-footer {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background:
+    radial-gradient(circle at 92% 0%, rgba(10, 134, 223, 0.13), transparent 37%),
+    #070809;
+}
+
+.site-footer::before {
+  position: absolute;
+  top: 0;
+  right: 7%;
+  left: 7%;
+  height: 2px;
+  content: "";
+  background: linear-gradient(90deg, transparent, var(--cyan), var(--blue), var(--orange), transparent);
+}
+
+.footer-top {
+  border-color: rgba(0, 182, 200, 0.15);
+}
+
+.footer-legal a {
+  color: var(--cyan);
+}
+
+@media (max-width: 1120px) {
+  .hero::before { display: none; }
+}
