@@ -17,7 +17,6 @@ import {
   Laptop,
   Monitor,
   MousePointer2,
-  PackageOpen,
   Play,
   RotateCcw,
   ShieldCheck,
@@ -31,7 +30,10 @@ type Language = 'es' | 'en';
 
 const SOURCE_REPO = 'https://github.com/nauticsoftware/NauticMixxx';
 const SOURCE_TAG = `${SOURCE_REPO}/tree/v1.0.0`;
-const SOURCE_ARCHIVE = `${SOURCE_REPO}/archive/refs/tags/v1.0.0.tar.gz`;
+const RELEASE_DOWNLOADS = `${SOURCE_REPO}/releases/download/v1.0.0`;
+const MAC_DOWNLOAD = `${RELEASE_DOWNLOADS}/NauticMixxx-1.0.0-macOS-arm64.dmg`;
+const WINDOWS_DOWNLOAD = `${RELEASE_DOWNLOADS}/NauticMixxx-1.0.0-Windows-x64.zip`;
+const SOURCE_ARCHIVE = `${RELEASE_DOWNLOADS}/NauticMixxx-1.0.0-source.tar.gz`;
 
 const copy = {
   es: {
@@ -42,7 +44,7 @@ const copy = {
     heroDetail: 'Conectá tu pendrive exportado, navegá playlists y cargá pistas sin importar tu biblioteca ni tocar el mouse.',
     primaryCta: 'Descargar v1.0.0', secondaryCta: 'Ver código en GitHub',
     readOnly: 'USB 100% Read-Only', noFiles: 'No modifica tus archivos', noAccount: 'Sin registro obligatorio', free: 'Libre · GPL',
-    previewLabel: 'Aplicación de escritorio · Vista interactiva', previewHint: 'Probá los faders', releaseStatus: 'Release de código disponible',
+    previewLabel: 'Aplicación de escritorio · Vista interactiva', previewHint: 'Probá los faders', releaseStatus: 'Release estable disponible',
     aboutEyebrow: 'Antes que nada', aboutTitle: 'Es una app. No toca tu XDJ.',
     aboutText: 'NauticMixxx corre en tu computadora y se controla con hardware DJ convencional. No reemplaza el sistema de una Pioneer real y su experiencia completa va mucho más allá de un cambio visual.',
     clarifyAppTitle: 'Aplicación de escritorio', clarifyAppText: 'Se instala en macOS, Windows o Linux y funciona con controladoras compatibles con Mixxx.',
@@ -58,15 +60,15 @@ const copy = {
     contractText: 'La colección local queda fuera del navegador. NauticMixxx mantiene únicamente el estado interno necesario para operar e historial, pero nunca persiste tus pistas USB como colección ni escribe sobre el dispositivo.',
     contractOne: 'Catálogo transitorio en memoria', contractTwo: 'Sin escaneo de carpetas locales', contractThree: 'Sin reescritura de USB', contractFour: 'Rutas protegidas incluso tras desconectar',
     downloadEyebrow: 'Release 1.0.0', downloadTitle: 'Descargá el primer release.',
-    downloadText: 'El código v1.0.0 ya está etiquetado y es auditable. Los binarios públicos de macOS y Windows se habilitarán aquí cuando terminen su publicación y validación.',
+    downloadText: 'La versión estable v1.0.0 ya está disponible para macOS Apple Silicon y Windows x64, con fuentes correspondientes y checksums públicos.',
     macTitle: 'macOS', macMeta: 'Apple Silicon · macOS 11+', macFormat: 'DMG / ZIP',
     winTitle: 'Windows', winMeta: 'Windows 10 / 11 · x64', winFormat: 'ZIP / instalador',
     sourceTitle: 'Código fuente', sourceMeta: 'Linux · compilación reproducible', sourceFormat: 'TAR.GZ · tag v1.0.0',
-    pending: 'Binario pendiente', sourceDownload: 'Descargar fuentes', browseCode: 'Explorar repositorio',
-    macNote: 'La build comunitaria se firma ad hoc. Si Gatekeeper la bloquea, usá clic derecho → Abrir en la primera ejecución.',
-    winNote: 'La build estable se publicará después de completar el workflow nativo y sus pruebas en Windows x64.',
+    macDownload: 'Descargar DMG', winDownload: 'Descargar ZIP', sourceDownload: 'Descargar fuentes', browseCode: 'Explorar repositorio',
+    macNote: 'Build comunitaria firmada ad hoc y sin notarizar. Si macOS la bloquea, intentá abrirla y luego usá Ajustes del Sistema → Privacidad y seguridad → Abrir igualmente.',
+    winNote: 'Build nativa validada en Windows x64. Extraé todo el ZIP y ejecutá INSTALL-WINDOWS.cmd.',
     sourceNote: 'Incluye los diez parches, skin, mappings, efectos, scripts y documentación de compilación.',
-    releaseNote: 'No publicamos botones falsos: las descargas de aplicación aparecerán apenas los artefactos estén adjuntos al release.',
+    releaseNote: 'Release estable público. Verificá siempre la descarga con SHA256SUMS.txt disponible en GitHub Releases.',
     faqEyebrow: 'Preguntas frecuentes', faqTitle: 'Lo importante, sin letra chica.',
     faqs: [
       { q: '¿NauticMixxx reemplaza el sistema de una Pioneer XDJ-RX3 real?', a: 'No. Es una aplicación para computadoras que recrea un flujo de trabajo inspirado en la XDJ-RX3 para usarlo con una laptop y controladoras convencionales. No se instala en equipos Pioneer ni modifica su firmware.' },
@@ -74,7 +76,7 @@ const copy = {
       { q: '¿Puede dañar o desconfigurar la música de mi pendrive?', a: 'El flujo USB está diseñado como Read-Only. No persiste las pistas en la colección local, no las exporta, no las reescribe y no las entrega a trabajos locales de análisis. Aun así, conservá siempre una copia de seguridad de cualquier USB de trabajo.' },
       { q: '¿Qué pasa si desconecto el pendrive?', a: 'La sesión USB se invalida, el dispositivo desaparece del navegador y las rutas permanecen protegidas contra escritura. Para una actuación segura, detené la reproducción y expulsá el dispositivo desde el sistema antes de retirarlo.' },
       { q: '¿Qué controladoras son compatibles?', a: 'El flujo sin mouse está optimizado para Hercules DJControl Inpulse 500. Otras controladoras compatibles con Mixxx pueden mapearse; la cobertura exacta depende de cada mapping.' },
-      { q: '¿Dónde están los binarios v1.0.0?', a: 'El tag y el código fuente ya están publicados. Las builds de aplicación aparecerán cuando estén adjuntas y validadas en GitHub Releases; hasta entonces la web las muestra como pendientes.' },
+      { q: '¿Dónde están los binarios v1.0.0?', a: 'Los binarios estables para macOS Apple Silicon y Windows x64 están disponibles en esta página y en GitHub Releases, junto con las fuentes y sus checksums SHA-256.' },
     ],
     footerLine: 'Software DJ libre, hecho para tocar.', creditsTitle: 'Créditos open source',
     credits: 'Adaptación GNU GPL v3.0. Motor Mixxx 2.5.6 bajo GNU GPL v2.0 o posterior. Código, parches y atribuciones disponibles públicamente.',
@@ -90,7 +92,7 @@ const copy = {
     heroDetail: 'Connect your exported drive, browse playlists and load tracks without importing your library or touching the mouse.',
     primaryCta: 'Download v1.0.0', secondaryCta: 'View code on GitHub',
     readOnly: '100% Read-Only USB', noFiles: 'Does not modify files', noAccount: 'No account required', free: 'Free · GPL',
-    previewLabel: 'Desktop application · Interactive view', previewHint: 'Try the faders', releaseStatus: 'Source release available',
+    previewLabel: 'Desktop application · Interactive view', previewHint: 'Try the faders', releaseStatus: 'Stable release available',
     aboutEyebrow: 'First things first', aboutTitle: 'It’s an app. It never touches your XDJ.',
     aboutText: 'NauticMixxx runs on your computer and is controlled with everyday DJ hardware. It does not replace a real Pioneer system, and the complete experience goes far beyond a visual reskin.',
     clarifyAppTitle: 'Desktop application', clarifyAppText: 'Installs on macOS, Windows or Linux and works with Mixxx-compatible controllers.',
@@ -106,15 +108,15 @@ const copy = {
     contractText: 'The local collection stays outside the browser. NauticMixxx keeps only the internal state and history required to operate, but never persists USB tracks as a collection or writes to the device.',
     contractOne: 'Transient in-memory catalog', contractTwo: 'No local-folder scanning', contractThree: 'No USB rewriting', contractFour: 'Paths remain protected after unplug',
     downloadEyebrow: 'Release 1.0.0', downloadTitle: 'Get the first release.',
-    downloadText: 'The v1.0.0 source is tagged and auditable. Public macOS and Windows binaries will be enabled here once publishing and validation are complete.',
+    downloadText: 'Stable version v1.0.0 is now available for Apple Silicon macOS and Windows x64, with corresponding source and public checksums.',
     macTitle: 'macOS', macMeta: 'Apple Silicon · macOS 11+', macFormat: 'DMG / ZIP',
     winTitle: 'Windows', winMeta: 'Windows 10 / 11 · x64', winFormat: 'ZIP / installer',
     sourceTitle: 'Source code', sourceMeta: 'Linux · reproducible build', sourceFormat: 'TAR.GZ · v1.0.0 tag',
-    pending: 'Binary pending', sourceDownload: 'Download source', browseCode: 'Browse repository',
-    macNote: 'The community build is ad-hoc signed. If Gatekeeper blocks it, use right-click → Open on the first launch.',
-    winNote: 'The stable build will be published after the native Windows x64 workflow and tests are complete.',
+    macDownload: 'Download DMG', winDownload: 'Download ZIP', sourceDownload: 'Download source', browseCode: 'Browse repository',
+    macNote: 'Community build, ad-hoc signed and not notarized. If macOS blocks it, try opening it once, then use System Settings → Privacy & Security → Open Anyway.',
+    winNote: 'Native Windows x64 build validated. Extract the entire ZIP and run INSTALL-WINDOWS.cmd.',
     sourceNote: 'Includes all ten patches, the skin, mappings, effects, scripts and build documentation.',
-    releaseNote: 'No fake buttons: application downloads will appear as soon as the artifacts are attached to the release.',
+    releaseNote: 'Public stable release. Always verify your download with SHA256SUMS.txt from GitHub Releases.',
     faqEyebrow: 'Frequently asked questions', faqTitle: 'The important details, upfront.',
     faqs: [
       { q: 'Does NauticMixxx replace the system on a real Pioneer XDJ-RX3?', a: 'No. It is a computer application recreating an XDJ-RX3-inspired workflow for laptops and conventional controllers. It is never installed on Pioneer hardware and does not modify its firmware.' },
@@ -122,7 +124,7 @@ const copy = {
       { q: 'Can it damage or reconfigure the music on my drive?', a: 'The USB workflow is designed as read-only. It does not persist tracks in the local collection, export them, rewrite them or submit them to local analysis jobs. Still, always keep a backup of any performance drive.' },
       { q: 'What happens if I unplug the drive?', a: 'The USB session is invalidated, the device is removed from the browser and its paths remain write-protected. For safe performance practice, stop playback and eject the device from the operating system first.' },
       { q: 'Which controllers are compatible?', a: 'The mouse-free flow is optimized for the Hercules DJControl Inpulse 500. Other Mixxx-compatible controllers can be mapped; exact coverage depends on each mapping.' },
-      { q: 'Where are the v1.0.0 binaries?', a: 'The tag and source are published. Application builds will appear when they are attached and validated in GitHub Releases; until then, the website labels them as pending.' },
+      { q: 'Where are the v1.0.0 binaries?', a: 'Stable Apple Silicon macOS and Windows x64 binaries are available on this page and on GitHub Releases, together with corresponding source and SHA-256 checksums.' },
     ],
     footerLine: 'Free DJ software, made to perform.', creditsTitle: 'Open-source credits',
     credits: 'Adaptation under GNU GPL v3.0. Mixxx 2.5.6 engine under GNU GPL v2.0 or later. Code, patches and attributions are publicly available.',
@@ -241,8 +243,8 @@ export default function App() {
       <section className="downloads section" id="download">
         <div className="download-heading"><div><p className="section-eyebrow">{t.downloadEyebrow}</p><h2>{t.downloadTitle}</h2></div><p>{t.downloadText}</p></div>
         <div className="download-grid">
-          <article className="download-card"><div className="download-platform"><Laptop size={24} /><span>{t.macFormat}</span></div><h3>{t.macTitle}</h3><p className="download-meta">{t.macMeta}</p><span className="download-disabled" aria-disabled="true"><PackageOpen size={17} />{t.pending}</span><p className="download-note">{t.macNote}</p></article>
-          <article className="download-card"><div className="download-platform"><Monitor size={24} /><span>{t.winFormat}</span></div><h3>{t.winTitle}</h3><p className="download-meta">{t.winMeta}</p><span className="download-disabled" aria-disabled="true"><PackageOpen size={17} />{t.pending}</span><p className="download-note">{t.winNote}</p></article>
+          <article className="download-card"><div className="download-platform"><Laptop size={24} /><span>{t.macFormat}</span></div><h3>{t.macTitle}</h3><p className="download-meta">{t.macMeta}</p><a className="download-active" href={MAC_DOWNLOAD}><Download size={17} />{t.macDownload}</a><p className="download-note">{t.macNote}</p></article>
+          <article className="download-card"><div className="download-platform"><Monitor size={24} /><span>{t.winFormat}</span></div><h3>{t.winTitle}</h3><p className="download-meta">{t.winMeta}</p><a className="download-active" href={WINDOWS_DOWNLOAD}><Download size={17} />{t.winDownload}</a><p className="download-note">{t.winNote}</p></article>
           <article className="download-card download-card--source"><div className="download-platform"><Terminal size={24} /><span>{t.sourceFormat}</span></div><h3>{t.sourceTitle}</h3><p className="download-meta">{t.sourceMeta}</p><a className="download-active" href={SOURCE_ARCHIVE}><Download size={17} />{t.sourceDownload}</a><a className="download-code-link" href={SOURCE_TAG} target="_blank" rel="noreferrer">{t.browseCode}<ExternalLink size={13} /></a><p className="download-note">{t.sourceNote}</p></article>
         </div>
         <div className="release-honesty"><ShieldCheck size={18} /><p>{t.releaseNote}</p></div>
