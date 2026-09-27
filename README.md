@@ -9,13 +9,12 @@ npm install
 npm run dev
 ```
 
-## Contenido reemplazable
+## Contenido y recursos
 
-- `public/app-icon.svg`: icono conceptual temporal.
-- `src/App.tsx`, componente `MixerPreview`: demo visual temporal de la interfaz.
-- `public/media/`: lugar preparado para futuras capturas y videos.
-- `index.html`: canonical, metadatos sociales y dominio de producción.
-- `src/App.tsx`, constante `CONTACT_EMAIL`: dirección que recibe solicitudes de acceso.
+- `public/media/`: capturas reales de NauticMixxx v1.0.0 (`nauticmixxx-waveforms.png`, `nauticmixxx-browser.png`, `nauticmixxx-standby.png`).
+- `src/App.tsx`, componente `ScreenshotViewer`: visualizador interactivo de capturas de la aplicación con pestañas y zoom lightbox.
+- `public/app-icon.svg`: icono de la marca y favicon.
+- `index.html`: canonical, metadatos Open Graph y Twitter Cards con imagen de previsualización social.
 
 El formulario no simula una base de datos: prepara un email real en el cliente de correo del visitante. Cuando exista un servicio de newsletter o waitlist, el manejador `handleEarlyAccess` es el punto de integración.
 

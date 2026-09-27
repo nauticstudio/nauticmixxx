@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import {
   AppWindow,
@@ -15,6 +15,7 @@ import {
   Gauge,
   Github,
   Laptop,
+  Maximize2,
   Monitor,
   MousePointer2,
   Play,
@@ -24,9 +25,21 @@ import {
   Terminal,
   Usb,
   Waves,
+  X,
 } from 'lucide-react';
 
 type Language = 'es' | 'en';
+type ScreenshotTab = 'waveforms' | 'browser' | 'standby';
+
+interface ScreenshotItem {
+  id: ScreenshotTab;
+  tabLabel: string;
+  badge: string;
+  title: string;
+  description: string;
+  src: string;
+  alt: string;
+}
 
 const SOURCE_REPO = 'https://github.com/nauticsoftware/NauticMixxx';
 const SOURCE_TAG = `${SOURCE_REPO}/tree/v1.0.0`;
@@ -37,14 +50,46 @@ const SOURCE_ARCHIVE = `${RELEASE_DOWNLOADS}/NauticMixxx-1.0.0-source.tar.gz`;
 
 const copy = {
   es: {
-    navAbout: 'Qué es', navFeatures: 'Funciones', navDownload: 'Descargas', navFaq: 'FAQ', navCta: 'Descargar v1.0.0',
+    navAbout: 'Qué es', navFeatures: 'Funciones', navScreens: 'Capturas', navDownload: 'Descargas', navFaq: 'FAQ', navCta: 'Descargar v1.0.0',
     eyebrow: 'v1.0.0 · Fork open source de Mixxx 2.5.6',
     titleA: 'Tu USB de Rekordbox.', titleB: 'Directo a la pista.',
     hero: 'NauticMixxx es una aplicación de escritorio para macOS, Windows y Linux —no es firmware ni una simple skin— que lleva el flujo standalone inspirado en la XDJ-RX3 a tu laptop y controladora.',
     heroDetail: 'Conectá tu pendrive exportado, navegá playlists y cargá pistas sin importar tu biblioteca ni tocar el mouse.',
     primaryCta: 'Descargar v1.0.0', secondaryCta: 'Ver código en GitHub',
     readOnly: 'USB 100% Read-Only', noFiles: 'No modifica tus archivos', noAccount: 'Sin registro obligatorio', free: 'Libre · GPL',
-    previewLabel: 'Aplicación de escritorio · Vista interactiva', previewHint: 'Probá los faders', releaseStatus: 'Release estable disponible',
+    previewLabel: 'Capturas reales · NauticMixxx 1.0.0', previewHint: 'Clic para cambiar o ampliar',
+    zoomLabel: 'Ampliar captura', closeZoom: 'Cerrar vista previa', releaseStatus: 'Release estable disponible',
+    galleryEyebrow: 'Capturas de pantalla', galleryTitle: 'La interfaz en acción.',
+    galleryText: 'Tres pantallas reales capturadas directamente de NauticMixxx en funcionamiento, mostrando el flujo standalone de decks, playlists y waveforms.',
+    screenshots: [
+      {
+        id: 'waveforms' as const,
+        tabLabel: 'Waveforms & FX',
+        badge: 'DECK 1 & 2 EN VIVO',
+        title: 'Waveforms tri-banda ANLZ y sincronización',
+        description: 'Visualización dual con formas de onda coloreadas por frecuencia Rekordbox, beatgrids PQTZ sincronizados a 138.0 BPM y panel Beat FX con Echo en Master.',
+        src: '/media/nauticmixxx-waveforms.png',
+        alt: 'NauticMixxx reproduciendo dos decks con waveforms tri-banda y sección de efectos',
+      },
+      {
+        id: 'browser' as const,
+        tabLabel: 'Navegador Rekordbox',
+        badge: 'LECTURA DIRECTA USB',
+        title: 'Navegación nativa de playlists y preview de pistas',
+        description: 'Exploración directa de export.pdb sin importar a tu laptop: previsualización de ondas, tono musical y artistas de tu pendrive.',
+        src: '/media/nauticmixxx-browser.png',
+        alt: 'Navegador de playlists y tracks de Rekordbox en NauticMixxx',
+      },
+      {
+        id: 'standby' as const,
+        tabLabel: 'Inicio / Standby',
+        badge: 'STANDALONE WORKFLOW',
+        title: 'Pantalla de inicio y detección USB',
+        description: 'Interfaz limpia inspirada en la XDJ-RX3: conectás tu pendrive y los decks quedan listos para cargar sin tocar la biblioteca local.',
+        src: '/media/nauticmixxx-standby.png',
+        alt: 'Pantalla de espera y standby de NauticMixxx con decks listos',
+      },
+    ],
     aboutEyebrow: 'Antes que nada', aboutTitle: 'Es una app. No toca tu XDJ.',
     aboutText: 'NauticMixxx corre en tu computadora y se controla con hardware DJ convencional. No reemplaza el sistema de una Pioneer real y su experiencia completa va mucho más allá de un cambio visual.',
     clarifyAppTitle: 'Aplicación de escritorio', clarifyAppText: 'Se instala en macOS, Windows o Linux y funciona con controladoras compatibles con Mixxx.',
@@ -82,17 +127,49 @@ const copy = {
     credits: 'Adaptación GNU GPL v3.0. Motor Mixxx 2.5.6 bajo GNU GPL v2.0 o posterior. Código, parches y atribuciones disponibles públicamente.',
     disclaimerTitle: 'Marcas y relación con otros proyectos',
     disclaimer: 'NauticMixxx es un proyecto comunitario independiente. No está afiliado, patrocinado, certificado ni respaldado por AlphaTheta Corporation, Pioneer DJ, Hercules, rekordbox ni el proyecto Mixxx. Sus nombres y marcas se mencionan únicamente para describir compatibilidad, procedencia técnica o flujo de trabajo.',
-    backTop: 'Volver arriba', channels: ['DRUMS', 'BASS', 'SYNTH', 'VOCAL'],
+    backTop: 'Volver arriba',
   },
   en: {
-    navAbout: 'What it is', navFeatures: 'Features', navDownload: 'Downloads', navFaq: 'FAQ', navCta: 'Download v1.0.0',
+    navAbout: 'What it is', navFeatures: 'Features', navScreens: 'Screenshots', navDownload: 'Downloads', navFaq: 'FAQ', navCta: 'Download v1.0.0',
     eyebrow: 'v1.0.0 · Open-source Mixxx 2.5.6 fork',
     titleA: 'Your Rekordbox USB.', titleB: 'Straight to the decks.',
     hero: 'NauticMixxx is a desktop application for macOS, Windows and Linux —not firmware or a simple skin— that brings an XDJ-RX3-inspired standalone flow to your laptop and controller.',
     heroDetail: 'Connect your exported drive, browse playlists and load tracks without importing your library or touching the mouse.',
     primaryCta: 'Download v1.0.0', secondaryCta: 'View code on GitHub',
     readOnly: '100% Read-Only USB', noFiles: 'Does not modify files', noAccount: 'No account required', free: 'Free · GPL',
-    previewLabel: 'Desktop application · Interactive view', previewHint: 'Try the faders', releaseStatus: 'Stable release available',
+    previewLabel: 'Real captures · NauticMixxx 1.0.0', previewHint: 'Click to switch view or expand',
+    zoomLabel: 'Expand capture', closeZoom: 'Close preview', releaseStatus: 'Stable release available',
+    galleryEyebrow: 'Interface screenshots', galleryTitle: 'The interface in action.',
+    galleryText: 'Three real screens captured straight from running NauticMixxx, showing the standalone workflow across decks, playlists, and waveforms.',
+    screenshots: [
+      {
+        id: 'waveforms' as const,
+        tabLabel: 'Waveforms & FX',
+        badge: 'LIVE DECKS 1 & 2',
+        title: '3-Band ANLZ Waveforms & Sync',
+        description: 'Dual-deck display with Rekordbox frequency-colored waveforms, PQTZ beatgrids locked at 138.0 BPM and Beat FX unit with Master Echo.',
+        src: '/media/nauticmixxx-waveforms.png',
+        alt: 'NauticMixxx running dual decks with 3-band waveforms and Beat FX section',
+      },
+      {
+        id: 'browser' as const,
+        tabLabel: 'Rekordbox Browser',
+        badge: 'DIRECT USB READ',
+        title: 'Native Playlist Navigation & Track Previews',
+        description: 'Browse export.pdb directly without local library imports: track waveforms, musical keys and artists straight from your USB.',
+        src: '/media/nauticmixxx-browser.png',
+        alt: 'Rekordbox playlist and track browser in NauticMixxx',
+      },
+      {
+        id: 'standby' as const,
+        tabLabel: 'Startup / Standby',
+        badge: 'STANDALONE WORKFLOW',
+        title: 'Startup Screen & USB Detection',
+        description: 'Clean XDJ-RX3-inspired interface: plug in your drive and decks are immediately ready without touching your local library.',
+        src: '/media/nauticmixxx-standby.png',
+        alt: 'NauticMixxx standby screen with ready decks',
+      },
+    ],
     aboutEyebrow: 'First things first', aboutTitle: 'It’s an app. It never touches your XDJ.',
     aboutText: 'NauticMixxx runs on your computer and is controlled with everyday DJ hardware. It does not replace a real Pioneer system, and the complete experience goes far beyond a visual reskin.',
     clarifyAppTitle: 'Desktop application', clarifyAppText: 'Installs on macOS, Windows or Linux and works with Mixxx-compatible controllers.',
@@ -130,56 +207,115 @@ const copy = {
     credits: 'Adaptation under GNU GPL v3.0. Mixxx 2.5.6 engine under GNU GPL v2.0 or later. Code, patches and attributions are publicly available.',
     disclaimerTitle: 'Trademarks and project relationships',
     disclaimer: 'NauticMixxx is an independent community project. It is not affiliated with, sponsored, certified or endorsed by AlphaTheta Corporation, Pioneer DJ, Hercules, rekordbox or the Mixxx project. Names and marks are mentioned solely to describe compatibility, technical origin or workflow.',
-    backTop: 'Back to top', channels: ['DRUMS', 'BASS', 'SYNTH', 'VOCAL'],
+    backTop: 'Back to top',
   },
 } as const;
 
-const initialLevels = [72, 58, 66, 78];
-const waveBars = [20, 34, 52, 28, 64, 74, 42, 86, 58, 36, 70, 48, 90, 62, 40, 76, 54, 30, 68, 84, 46, 72, 38, 60, 82, 50, 32, 66, 44, 78, 56, 26];
-
-function MixerPreview({ labels }: { labels: readonly string[] }) {
-  const [levels, setLevels] = useState(initialLevels);
-  const [muted, setMuted] = useState<number[]>([]);
-  const updateLevel = (channel: number, nextLevel: number) => setLevels((current) => current.map((value, index) => index === channel ? nextLevel : value));
-  const toggleMute = (channel: number) => setMuted((current) => current.includes(channel) ? current.filter((item) => item !== channel) : [...current, channel]);
+function ScreenshotViewer({
+  items,
+  activeId,
+  onChangeTab,
+  onOpenZoom,
+  zoomLabel,
+}: {
+  items: readonly ScreenshotItem[];
+  activeId: ScreenshotTab;
+  onChangeTab: (id: ScreenshotTab) => void;
+  onOpenZoom: () => void;
+  zoomLabel: string;
+}) {
+  const current = items.find((item) => item.id === activeId) ?? items[0];
 
   return (
-    <div className="mixer-shell">
+    <div className="screenshot-shell">
       <div className="window-bar">
         <div className="traffic-lights" aria-hidden="true"><i /><i /><i /></div>
-        <span className="window-project">REKORDBOX USB — NIGHT SET</span>
-        <span className="window-state"><i /> READ ONLY</span>
+        <span className="window-project">NAUTICMIXXX 1.0.0 — REKORDBOX USB MODE</span>
+        <span className="window-state"><i /> 100% READ ONLY</span>
       </div>
-      <div className="mixer-toolbar">
-        <div className="transport">
-          <button type="button" aria-label="Reset preview levels" onClick={() => setLevels(initialLevels)}><RotateCcw size={13} /></button>
-          <button type="button" className="transport-play" aria-label="Play preview"><Play size={12} fill="currentColor" /></button><span>01:42:18</span>
-        </div>
-        <div className="tempo"><span>124.00</span><small>BPM</small></div>
-        <div className="toolbar-tools"><MousePointer2 size={14} /><SlidersHorizontal size={14} /></div>
-      </div>
-      <div className="waveform" aria-label="Three-band waveform preview">
-        <div className="waveform-grid" /><div className="wave-bars">{waveBars.map((height, index) => <i key={index} style={{ height: `${height}%` }} />)}</div>
-        <span className="playhead" /><small className="marker marker-one">VERSE</small><small className="marker marker-two">DROP</small>
-      </div>
-      <div className="mixer-body">
-        <aside className="session-panel">
-          <span className="panel-label">USB SOURCE</span><strong>186 tracks</strong>
-          <div className="session-stat"><Usb size={13} /><span>REKORDBOX</span></div><div className="session-stat"><ShieldCheck size={13} /><span>READ ONLY</span></div>
-          <div className="mini-spectrum" aria-hidden="true">{[35, 52, 28, 72, 46, 82, 60, 38, 70, 48, 58, 32].map((height, index) => <i key={index} style={{ height: `${height}%` }} />)}</div>
-        </aside>
-        <div className="channel-bank">
-          {labels.map((label, channel) => {
-            const isMuted = muted.includes(channel);
-            return <div className={`channel ${isMuted ? 'channel--muted' : ''}`} key={label}>
-              <div className="channel-pan"><i style={{ transform: `rotate(${(levels[channel] - 50) * 1.8}deg)` }} /></div>
-              <div className="channel-meter" aria-hidden="true"><i style={{ height: `${isMuted ? 2 : levels[channel] * 0.88}%` }} /><i style={{ height: `${isMuted ? 2 : levels[channel]}%` }} /></div>
-              <input aria-label={`${label} level`} type="range" min="0" max="100" value={levels[channel]} onChange={(event) => updateLevel(channel, Number(event.target.value))} />
-              <span className="channel-value">{isMuted ? '−∞' : `${Math.round((levels[channel] - 75) / 2)}.0`}</span>
-              <div className="channel-controls"><button type="button" aria-pressed={isMuted} onClick={() => toggleMute(channel)}>M</button><button type="button">S</button></div><strong>{label}</strong>
-            </div>;
+
+      <div className="screenshot-tab-bar" role="tablist" aria-label="Pantallas de NauticMixxx">
+        <div className="screenshot-tabs">
+          {items.map((item) => {
+            const isActive = item.id === activeId;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                className={`screenshot-tab ${isActive ? 'screenshot-tab--active' : ''}`}
+                onClick={() => onChangeTab(item.id)}
+              >
+                {item.id === 'waveforms' && <Waves size={13} />}
+                {item.id === 'browser' && <Database size={13} />}
+                {item.id === 'standby' && <Monitor size={13} />}
+                <span>{item.tabLabel}</span>
+              </button>
+            );
           })}
-          <div className="channel master-channel"><span className="master-tag">MASTER</span><div className="master-orbit"><span>−8.2</span><small>LUFS</small></div><div className="master-meter" aria-hidden="true">{Array.from({ length: 18 }).map((_, index) => <i className={index > 13 ? 'hot' : ''} key={index} />)}</div><span className="master-peak">−0.8 dBTP</span></div>
+        </div>
+        <button
+          type="button"
+          className="screenshot-action-btn"
+          onClick={onOpenZoom}
+          aria-label={zoomLabel}
+          title={zoomLabel}
+        >
+          <Maximize2 size={13} />
+        </button>
+      </div>
+
+      <div
+        className="screenshot-viewport"
+        onClick={onOpenZoom}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onOpenZoom();
+          }
+        }}
+        aria-label={`${current.title} — ${zoomLabel}`}
+      >
+        <img
+          key={current.src}
+          src={current.src}
+          alt={current.alt}
+          className="screenshot-image"
+          width="1024"
+          height="640"
+          loading="eager"
+        />
+        <div className="screenshot-hover-hint">
+          <span><Maximize2 size={14} />{zoomLabel}</span>
+        </div>
+      </div>
+
+      <div className="screenshot-footer">
+        <div className="screenshot-info">
+          <div className="screenshot-badge-line">
+            <span className="screenshot-badge">{current.badge}</span>
+            <strong>{current.title}</strong>
+          </div>
+          <p>{current.description}</p>
+        </div>
+        <div className="screenshot-thumbs" aria-hidden="true">
+          {items.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              className={`screenshot-thumb ${item.id === activeId ? 'screenshot-thumb--active' : ''}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                onChangeTab(item.id);
+              }}
+              title={item.tabLabel}
+            >
+              <img src={item.src} alt="" width="72" height="45" />
+            </button>
+          ))}
         </div>
       </div>
     </div>
@@ -188,7 +324,27 @@ function MixerPreview({ labels }: { labels: readonly string[] }) {
 
 export default function App() {
   const [language, setLanguage] = useState<Language>('es');
+  const [activeTab, setActiveTab] = useState<ScreenshotTab>('waveforms');
+  const [zoomOpen, setZoomOpen] = useState(false);
   const t = copy[language];
+  const currentScreenshot = t.screenshots.find((item) => item.id === activeTab) ?? t.screenshots[0];
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setZoomOpen(false);
+    };
+    if (zoomOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [zoomOpen]);
+
   const switchLanguage = () => { const next = language === 'es' ? 'en' : 'es'; setLanguage(next); document.documentElement.lang = next; };
   const clarityCards = [
     { icon: AppWindow, title: t.clarifyAppTitle, text: t.clarifyAppText },
@@ -207,7 +363,7 @@ export default function App() {
     <div className="grain" aria-hidden="true" />
     <header className="site-header">
       <a className="brand" href="#top" aria-label="NauticMixxx — home"><img src="/app-icon.svg" width="38" height="38" alt="" /><span>NauticMixxx</span></a>
-      <nav aria-label="Main navigation"><a href="#about">{t.navAbout}</a><a href="#features">{t.navFeatures}</a><a href="#download">{t.navDownload}</a><a href="#faq">{t.navFaq}</a></nav>
+      <nav aria-label="Main navigation"><a href="#about">{t.navAbout}</a><a href="#features">{t.navFeatures}</a><a href="#screens">{t.navScreens}</a><a href="#download">{t.navDownload}</a><a href="#faq">{t.navFaq}</a></nav>
       <div className="header-actions"><button className="language-button" onClick={switchLanguage} type="button" aria-label={language === 'es' ? 'Switch to English' : 'Cambiar a español'}>{language === 'es' ? 'EN' : 'ES'}</button><a className="header-cta" href="#download">{t.navCta}<ArrowDown size={14} /></a></div>
     </header>
     <main>
@@ -220,7 +376,14 @@ export default function App() {
           <div className="hero-meta"><span><i />{t.releaseStatus}</span><small>macOS · Windows · Linux</small></div>
         </motion.div>
         <motion.div className="hero-product" initial={{ opacity: 0, y: 32, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.95, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}>
-          <div className="preview-caption"><span>{t.previewLabel}</span><span><MousePointer2 size={12} />{t.previewHint}</span></div><MixerPreview labels={t.channels} />
+          <div className="preview-caption"><span>{t.previewLabel}</span><span><MousePointer2 size={12} />{t.previewHint}</span></div>
+          <ScreenshotViewer
+            items={t.screenshots}
+            activeId={activeTab}
+            onChangeTab={setActiveTab}
+            onOpenZoom={() => setZoomOpen(true)}
+            zoomLabel={t.zoomLabel}
+          />
         </motion.div>
         <div className="trust-row trust-row--release" aria-label="Release principles"><span><ShieldCheck size={16} />{t.readOnly}</span><span><Check size={16} />{t.noFiles}</span><span><Code2 size={16} />{t.noAccount}</span><span><Code2 size={16} />{t.free}</span></div>
       </section>
@@ -233,6 +396,51 @@ export default function App() {
       <section className="features section" id="features">
         <div className="section-intro"><span className="section-number">01</span><div><p className="section-eyebrow">{t.whyEyebrow}</p><h2>{t.whyTitle}</h2><p>{t.whyText}</p></div></div>
         <div className="feature-grid">{features.map(({ icon: Icon, title, text, code }, index) => <article className={`feature-card ${index === 0 ? 'feature-card--accent' : ''}`} key={title}><div className="feature-card-top"><span>0{index + 1}</span><code>{code}</code></div><Icon size={27} /><h3>{title}</h3><p>{text}</p></article>)}</div>
+      </section>
+
+      <section className="gallery section" id="screens">
+        <div className="section-intro">
+          <span className="section-number">02</span>
+          <div>
+            <p className="section-eyebrow">{t.galleryEyebrow}</p>
+            <h2>{t.galleryTitle}</h2>
+            <p>{t.galleryText}</p>
+          </div>
+        </div>
+        <div className="gallery-grid">
+          {t.screenshots.map((s, index) => (
+            <article
+              key={s.id}
+              className={`gallery-card ${activeTab === s.id ? 'gallery-card--active' : ''}`}
+              onClick={() => {
+                setActiveTab(s.id);
+                setZoomOpen(true);
+              }}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setActiveTab(s.id);
+                  setZoomOpen(true);
+                }
+              }}
+            >
+              <div className="gallery-card-media">
+                <img src={s.src} alt={s.alt} width="1024" height="640" loading="lazy" />
+                <span className="gallery-card-zoom"><Maximize2 size={16} /></span>
+              </div>
+              <div className="gallery-card-body">
+                <div className="gallery-card-header">
+                  <span className="gallery-card-number">0{index + 1}</span>
+                  <span className="screenshot-badge">{s.badge}</span>
+                </div>
+                <h3>{s.title}</h3>
+                <p>{s.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="usb-contract">
@@ -259,5 +467,57 @@ export default function App() {
       <div className="footer-top"><a className="brand" href="#top"><img src="/app-icon.svg" width="38" height="38" alt="" /><span>NauticMixxx</span></a><p>{t.footerLine}</p><a href="#top">{t.backTop}<ArrowRight size={14} /></a></div>
       <div className="footer-legal"><div><h3>{t.creditsTitle}</h3><p>{t.credits}</p><a href={`${SOURCE_REPO}/blob/v1.0.0/LICENSE.md`} target="_blank" rel="noreferrer">LICENSE.md <ExternalLink size={12} /></a></div><div><h3>{t.disclaimerTitle}</h3><p>{t.disclaimer}</p><a href={`${SOURCE_REPO}/blob/v1.0.0/TRADEMARKS.md`} target="_blank" rel="noreferrer">TRADEMARKS.md <ExternalLink size={12} /></a></div></div>
     </footer>
+
+    {zoomOpen && (
+      <div
+        className="lightbox-overlay"
+        role="dialog"
+        aria-modal="true"
+        onClick={() => setZoomOpen(false)}
+      >
+        <div className="lightbox-modal" onClick={(e) => e.stopPropagation()}>
+          <div className="lightbox-top">
+            <div className="lightbox-title-wrap">
+              <span className="screenshot-badge">{currentScreenshot.badge}</span>
+              <h3>{currentScreenshot.title}</h3>
+            </div>
+            <div className="lightbox-actions">
+              <div className="lightbox-nav-tabs">
+                {t.screenshots.map((s) => (
+                  <button
+                    key={s.id}
+                    type="button"
+                    className={`lightbox-tab ${s.id === activeTab ? 'lightbox-tab--active' : ''}`}
+                    onClick={() => setActiveTab(s.id)}
+                  >
+                    {s.tabLabel}
+                  </button>
+                ))}
+              </div>
+              <button
+                type="button"
+                className="lightbox-close"
+                onClick={() => setZoomOpen(false)}
+                aria-label={t.closeZoom}
+              >
+                <X size={18} />
+              </button>
+            </div>
+          </div>
+          <div className="lightbox-viewport">
+            <img
+              src={currentScreenshot.src}
+              alt={currentScreenshot.alt}
+              className="lightbox-image"
+              width="1024"
+              height="640"
+            />
+          </div>
+          <div className="lightbox-caption">
+            <p>{currentScreenshot.description}</p>
+          </div>
+        </div>
+      </div>
+    )}
   </div>;
 }
