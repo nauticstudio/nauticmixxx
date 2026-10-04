@@ -3,3 +3,6 @@ dist
 .DS_Store
 *.local
 *.tsbuildinfo
+
+# Generated from GitHub before builds
+/public/release-snapshot.json

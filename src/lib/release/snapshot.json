@@ -1,0 +1,81 @@
+{
+  "tag_name": "v1.5.1",
+  "name": "NauticMixxx 1.5.1 — Audio output freeze fix",
+  "html_url": "https://github.com/nauticsoftware/NauticMixxx/releases/tag/v1.5.1",
+  "draft": false,
+  "prerelease": false,
+  "published_at": "2026-10-04T03:14:19Z",
+  "checked_at": "2026-10-04T03:30:58.504Z",
+  "assets": [
+    {
+      "name": "CONFIGURE-AND-OPEN.command",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/nauticsoftware/NauticMixxx/releases/download/v1.5.1/CONFIGURE-AND-OPEN.command"
+    },
+    {
+      "name": "install-nauticmixxx-macos.sh",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/nauticsoftware/NauticMixxx/releases/download/v1.5.1/install-nauticmixxx-macos.sh"
+    },
+    {
+      "name": "NauticMixxx-1.5.1-github-source.zip",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/nauticsoftware/NauticMixxx/releases/download/v1.5.1/NauticMixxx-1.5.1-github-source.zip"
+    },
+    {
+      "name": "NauticMixxx-1.5.1-macOS-arm64.dmg",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/nauticsoftware/NauticMixxx/releases/download/v1.5.1/NauticMixxx-1.5.1-macOS-arm64.dmg"
+    },
+    {
+      "name": "NauticMixxx-1.5.1-macOS-arm64.zip",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/nauticsoftware/NauticMixxx/releases/download/v1.5.1/NauticMixxx-1.5.1-macOS-arm64.zip"
+    },
+    {
+      "name": "NauticMixxx-1.5.1-skin.zip",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/nauticsoftware/NauticMixxx/releases/download/v1.5.1/NauticMixxx-1.5.1-skin.zip"
+    },
+    {
+      "name": "NauticMixxx-1.5.1-source.tar.gz",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/nauticsoftware/NauticMixxx/releases/download/v1.5.1/NauticMixxx-1.5.1-source.tar.gz"
+    },
+    {
+      "name": "NauticMixxx-1.5.1-Windows-x64-Setup.exe",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/nauticsoftware/NauticMixxx/releases/download/v1.5.1/NauticMixxx-1.5.1-Windows-x64-Setup.exe"
+    },
+    {
+      "name": "NauticMixxx-1.5.1.spdx.json",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/nauticsoftware/NauticMixxx/releases/download/v1.5.1/NauticMixxx-1.5.1.spdx.json"
+    },
+    {
+      "name": "release-manifest.json",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/nauticsoftware/NauticMixxx/releases/download/v1.5.1/release-manifest.json"
+    },
+    {
+      "name": "RELEASE_NOTES.md",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/nauticsoftware/NauticMixxx/releases/download/v1.5.1/RELEASE_NOTES.md"
+    },
+    {
+      "name": "RELEASE_NOTES_EN.md",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/nauticsoftware/NauticMixxx/releases/download/v1.5.1/RELEASE_NOTES_EN.md"
+    },
+    {
+      "name": "SHA256SUMS.txt",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/nauticsoftware/NauticMixxx/releases/download/v1.5.1/SHA256SUMS.txt"
+    },
+    {
+      "name": "TEST_REPORT.md",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/nauticsoftware/NauticMixxx/releases/download/v1.5.1/TEST_REPORT.md"
+    }
+  ]
+}

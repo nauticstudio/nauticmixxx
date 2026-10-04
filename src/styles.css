@@ -3358,3 +3358,7 @@ body::before {
 @media (max-width: 800px) {
   .setup-steps { grid-template-columns: 1fr; }
 }
+
+.release-title { margin: 0 0 1.8rem; color: var(--text-muted, #a1a1aa); font-size: .875rem; line-height: 1.6; }
+.release-title a { display: inline-flex; align-items: center; gap: .5rem; }
+.release-title a:hover { color: #fff; }

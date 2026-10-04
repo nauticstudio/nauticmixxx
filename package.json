@@ -5,9 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "tsc -b && vite build && node scripts/prerender.mjs",
+    "build": "tsc -b && vite build && node scripts/prerender.mjs && node scripts/verify-release-export.mjs",
     "preview": "vite preview --host 0.0.0.0",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "prebuild": "node scripts/prepare-release.mjs",
+    "predev": "node scripts/prepare-release.mjs",
+    "test:release": "node --test scripts/release.test.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^5.0.4",

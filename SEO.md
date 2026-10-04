@@ -46,3 +46,7 @@ Las dos páginas estáticas y el 404 se publican con el workflow de GitHub Pages
 - [Google: hreflang y versiones localizadas](https://developers.google.com/search/docs/specialty/international/localized-versions)
 - [Google: títulos en los resultados](https://developers.google.com/search/docs/appearance/title-link)
 - [Google: datos estructurados de software](https://developers.google.com/search/docs/appearance/structured-data/software-app)
+
+## Sincronización de releases (4 de octubre de 2026)
+
+La versión y los enlaces de `SoftwareApplication` se obtienen de GitHub antes de cada build. Una revisión horaria en Actions actualiza el HTML estático; el navegador consulta la release al abrir la página y actualiza también el JSON-LD. La integración inicial verificó la v1.5.1 y los nombres reales de sus instaladores. El sistema mantiene el último resultado válido ante errores y no publica un fallback antiguo si falla GitHub en CI.

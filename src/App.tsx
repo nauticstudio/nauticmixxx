@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
-import {
-  SOURCE_REPO, RELEASE_VERSION, SOURCE_TAG, RELEASE_PAGE, MAC_DOWNLOAD,
-  WINDOWS_DOWNLOAD, SOURCE_ARCHIVE, CHECKSUMS, CONTROLLER_GUIDE, TEST_REPORT, INSTALLATION_GUIDE,
-} from './product';
+import { SOURCE_REPO } from './product';
+import { useNauticRelease } from './lib/release/useNauticRelease';
 import {
   AppWindow,
   ArrowDown,
@@ -48,15 +46,15 @@ interface ScreenshotItem {
 
 const copy = {
   es: {
-    navAbout: 'Qué es', navFeatures: 'Funciones', navScreens: 'Capturas', navDownload: 'Descargas', navFaq: 'FAQ', navCta: 'Descargar v1.5.0',
-    eyebrow: 'v1.5.0 · Vista previa pública · Mixxx 2.5.6',
+    navAbout: 'Qué es', navFeatures: 'Funciones', navScreens: 'Capturas', navDownload: 'Descargas', navFaq: 'FAQ', navCta: 'Descargar v{version}',
+    eyebrow: 'v{version} · Última versión publicada · Mixxx 2.5.6',
     titleA: 'Tu USB de Rekordbox.', titleB: 'Directo a la pista.',
     hero: 'NauticMixxx es una edición comunitaria de Mixxx 2.5.6 para macOS y Windows, con dos decks y una interfaz inspirada en la XDJ-RX3.',
     heroDetail: 'Conectá un USB exportado por Rekordbox, navegá sus playlists y cargá pistas desde la app. La versión 1.5 suma navegación con más controladoras.',
-    primaryCta: 'Descargar v1.5.0', secondaryCta: 'Ver código en GitHub',
+    primaryCta: 'Descargar v{version}', secondaryCta: 'Ver código en GitHub',
     readOnly: 'USB en modo lectura', noFiles: 'Sin escaneo local', noAccount: 'Sin registro', free: 'Código abierto · GPL',
     previewLabel: 'Capturas reales de NauticMixxx', previewHint: 'Clic para cambiar o ampliar',
-    zoomLabel: 'Ampliar captura', closeZoom: 'Cerrar vista previa', releaseStatus: 'Vista previa pública',
+    zoomLabel: 'Ampliar captura', closeZoom: 'Cerrar vista previa', releaseStatus: 'Última versión publicada',
     galleryEyebrow: 'Capturas de pantalla', galleryTitle: 'La interfaz en acción.',
     galleryText: 'Vistas de inicio y PERFORMANCE del README oficial, junto con capturas históricas del navegador y los efectos.',
     screenshots: [
@@ -111,7 +109,7 @@ const copy = {
     featureOneTitle: 'Cero importaciones. Cero escrituras.', featureOneText: 'Lee export.pdb directamente en una sesión transitoria. El USB no se incorpora a la biblioteca local ni se envía a trabajos de análisis.',
     featureTwoTitle: 'Tu preparación, a la vista.', featureTwoText: 'Muestra formas de onda, beatgrid, overviews y hasta ocho Hot Cues por deck. La versión 1.4 corrigió el timing de MP3 Rekordbox en macOS.',
     featureThreeTitle: 'Navegación desde la controladora.', featureThreeText: 'Inpulse 500 tiene un mapeo dedicado. La versión 1.5 incluye presets RX3 para DDJ-400, SX, SX2, SX3, WeGO3, FLX4 y Roland DJ-505.',
-    featureFourTitle: 'Base abierta y verificable.', featureFourText: 'Basado en Mixxx 2.5.6, con parches reproducibles. Las builds 1.5 pasaron 63 pruebas nativas en macOS y 93 en Windows.',
+    featureFourTitle: 'Base abierta y verificable.', featureFourText: 'Basado en Mixxx 2.5.6, con parches reproducibles. Los resultados y límites de cada build están documentados en el informe de pruebas de su release.',
     whatsNewLabel: 'Novedades de 1.5',
     whatsNew: [
       { title: 'Volvé a PERFORMANCE', text: 'En Inpulse 500, mantener ASSISTANT 600 ms sale de BROWSE sin cargar una pista.' },
@@ -121,16 +119,16 @@ const copy = {
     contractEyebrow: 'Contrato USB-only', contractTitle: 'Lectura estricta. Sin sorpresas antes del bolo.',
     contractText: 'La colección local queda fuera del navegador. NauticMixxx mantiene únicamente el estado interno necesario para operar e historial, pero nunca persiste tus pistas USB como colección ni escribe sobre el dispositivo.',
     contractOne: 'Catálogo USB transitorio', contractTwo: 'Sin escaneo de carpetas locales', contractThree: 'Sin reescritura de USB', contractFour: 'Análisis y caché de ondas desactivados',
-    downloadEyebrow: 'Versión 1.5.0', downloadTitle: 'Descargá la vista previa.',
-    downloadText: 'La vista previa pública 1.5.0 ofrece instaladores para macOS Apple Silicon y Windows x64. También están disponibles las fuentes y los SHA-256.',
+    downloadEyebrow: 'Versión {version}', downloadTitle: 'Descargá NauticMixxx.',
+    downloadText: 'La versión {version} es la última publicada en GitHub. Elegí una descarga disponible o consultá las notas oficiales de esta release.',
     macTitle: 'macOS', macMeta: 'Apple Silicon · ARM64', macFormat: 'DMG',
     winTitle: 'Windows', winMeta: 'Windows x64', winFormat: 'Instalador EXE',
-    sourceTitle: 'Código fuente', sourceMeta: 'Para compilar y revisar el proyecto', sourceFormat: 'TAR.GZ · tag v1.5.0',
+    sourceTitle: 'Código fuente', sourceMeta: 'Para compilar y revisar el proyecto', sourceFormat: 'TAR.GZ · tag v{version}',
     macDownload: 'Descargar DMG', winDownload: 'Descargar EXE', sourceDownload: 'Descargar fuentes', browseCode: 'Explorar código',
     macNote: 'Build comunitaria firmada ad hoc y sin notarizar. Si macOS la bloquea, intentá abrirla y luego usá Ajustes del Sistema → Privacidad y seguridad → Abrir igualmente.',
     winNote: 'Instalador nativo por usuario. Ejecutá el EXE; Windows SmartScreen puede pedir confirmación porque no está firmado.',
     sourceNote: 'Fuentes correspondientes, skin, mapeos, efectos, scripts y documentación. No hay binario Linux publicado.',
-    releaseNote: 'Vista previa pública: los siete presets Pioneer/Roland y la calibración del jog Inpulse 500 aún requieren validación física. Verificá el archivo con SHA256SUMS.txt.',
+    releaseNote: 'Los siete presets Pioneer/Roland y la calibración del jog Inpulse 500 aún requieren validación física. Verificá el archivo con SHA256SUMS.txt.',
     guideLink: 'Guía de controladoras', testLink: 'Informe de pruebas', checksumsLink: 'Checksums SHA-256', releaseLink: 'Ver release en GitHub',
     setupEyebrow: 'Primeros pasos', setupTitle: 'Cómo usar tu USB de Rekordbox en NauticMixxx.',
     setupIntro: 'Usá un USB exportado por Rekordbox. NauticMixxx lee su catálogo y sus playlists; no necesita escanear una carpeta de música local.',
@@ -147,7 +145,7 @@ const copy = {
       { q: '¿Puede dañar o desconfigurar la música de mi pendrive?', a: 'El flujo USB está diseñado como Read-Only. No persiste las pistas en la colección local, no las exporta, no las reescribe y no las entrega a trabajos locales de análisis. Aun así, conservá siempre una copia de seguridad de cualquier USB de trabajo.' },
       { q: '¿Qué pasa si desconecto el pendrive?', a: 'La sesión USB se invalida, el dispositivo desaparece del navegador y las rutas permanecen protegidas contra escritura. Para una actuación segura, detené la reproducción y expulsá el dispositivo desde el sistema antes de retirarlo.' },
       { q: '¿Qué controladoras tienen presets RX3?', a: 'Inpulse 500 tiene un mapeo dedicado. La versión 1.5 incluye presets para DDJ-400, DDJ-SX, DDJ-SX2, DDJ-SX3, DDJ-WeGO3, DDJ-FLX4 y Roland DJ-505. Su validación física está pendiente; el SX3 es experimental. El FLX6 conserva un preset limitado al navegador.' },
-      { q: '¿Dónde están los instaladores 1.5.0?', a: 'En GitHub Releases: DMG para macOS Apple Silicon y EXE para Windows x64, más fuentes y checksums SHA-256. No se publica un binario Linux en esta versión.' },
+      { q: '¿Dónde están los últimos instaladores?', a: 'En GitHub Releases. Los botones de esta página consultan la última release publicada y enlazan sus archivos disponibles. Si falta un instalador, el enlace lleva a las descargas de la release.' },
     ],
     footerLine: 'Software DJ libre, hecho para tocar.', creditsTitle: 'Créditos open source',
     credits: 'Adaptación GNU GPL v3.0. Motor Mixxx 2.5.6 bajo GNU GPL v2.0 o posterior. Código, parches y atribuciones disponibles públicamente.',
@@ -156,15 +154,15 @@ const copy = {
     backTop: 'Volver arriba',
   },
   en: {
-    navAbout: 'What it is', navFeatures: 'Features', navScreens: 'Screenshots', navDownload: 'Downloads', navFaq: 'FAQ', navCta: 'Download v1.5.0',
-    eyebrow: 'v1.5.0 · Public preview · Mixxx 2.5.6',
+    navAbout: 'What it is', navFeatures: 'Features', navScreens: 'Screenshots', navDownload: 'Downloads', navFaq: 'FAQ', navCta: 'Download v{version}',
+    eyebrow: 'v{version} · Latest published release · Mixxx 2.5.6',
     titleA: 'Your Rekordbox USB.', titleB: 'Straight to the decks.',
     hero: 'NauticMixxx is a community edition of Mixxx 2.5.6 for macOS and Windows, with two decks and an XDJ-RX3-inspired interface.',
     heroDetail: 'Connect a Rekordbox-exported USB, browse its playlists and load tracks in the app. Version 1.5 adds navigation for more controllers.',
-    primaryCta: 'Download v1.5.0', secondaryCta: 'View code on GitHub',
+    primaryCta: 'Download v{version}', secondaryCta: 'View code on GitHub',
     readOnly: 'Read-only USB mode', noFiles: 'No local scanning', noAccount: 'No account', free: 'Open source · GPL',
     previewLabel: 'Real NauticMixxx screenshots', previewHint: 'Click to switch view or expand',
-    zoomLabel: 'Expand capture', closeZoom: 'Close preview', releaseStatus: 'Public preview',
+    zoomLabel: 'Expand capture', closeZoom: 'Close preview', releaseStatus: 'Latest published release',
     galleryEyebrow: 'Interface screenshots', galleryTitle: 'The interface in action.',
     galleryText: 'Startup and PERFORMANCE views from the official README, alongside historical browser and effects screenshots.',
     screenshots: [
@@ -219,7 +217,7 @@ const copy = {
     featureOneTitle: 'Zero imports. Zero writes.', featureOneText: 'Reads export.pdb directly into a transient session. USB tracks never become part of the local collection or local analysis jobs.',
     featureTwoTitle: 'See your preparation.', featureTwoText: 'Displays waveforms, beatgrid, overviews and up to eight Hot Cues per deck. Version 1.4 corrected Rekordbox MP3 timing on macOS.',
     featureThreeTitle: 'Browse from a controller.', featureThreeText: 'Inpulse 500 has a dedicated mapping. Version 1.5 includes RX3 presets for DDJ-400, SX, SX2, SX3, WeGO3, FLX4 and Roland DJ-505.',
-    featureFourTitle: 'Open and verifiable.', featureFourText: 'Based on Mixxx 2.5.6 with reproducible patches. The 1.5 builds passed 63 native tests on macOS and 93 on Windows.',
+    featureFourTitle: 'Open and verifiable.', featureFourText: 'Based on Mixxx 2.5.6 with reproducible patches. Each release documents its build results and limitations in its test report.',
     whatsNewLabel: 'New in 1.5',
     whatsNew: [
       { title: 'Return to PERFORMANCE', text: 'On Inpulse 500, hold ASSISTANT for 600 ms to leave BROWSE without loading a track.' },
@@ -229,16 +227,16 @@ const copy = {
     contractEyebrow: 'USB-only contract', contractTitle: 'Strictly read-only. No pre-gig surprises.',
     contractText: 'The local collection stays outside the browser. NauticMixxx keeps only the internal state and history required to operate, but never persists USB tracks as a collection or writes to the device.',
     contractOne: 'Transient USB catalog', contractTwo: 'No local-folder scanning', contractThree: 'No USB rewriting', contractFour: 'Analysis and waveform cache disabled',
-    downloadEyebrow: 'Version 1.5.0', downloadTitle: 'Download the preview.',
-    downloadText: 'The 1.5.0 public preview provides installers for Apple Silicon macOS and Windows x64. Source and SHA-256 checksums are also available.',
+    downloadEyebrow: 'Version {version}', downloadTitle: 'Download NauticMixxx.',
+    downloadText: 'Version {version} is the latest published on GitHub. Choose an available download or read the official release notes.',
     macTitle: 'macOS', macMeta: 'Apple Silicon · ARM64', macFormat: 'DMG',
     winTitle: 'Windows', winMeta: 'Windows x64', winFormat: 'EXE installer',
-    sourceTitle: 'Source code', sourceMeta: 'Build and inspect the project', sourceFormat: 'TAR.GZ · v1.5.0 tag',
+    sourceTitle: 'Source code', sourceMeta: 'Build and inspect the project', sourceFormat: 'TAR.GZ · v{version} tag',
     macDownload: 'Download DMG', winDownload: 'Download EXE', sourceDownload: 'Download source', browseCode: 'Browse code',
     macNote: 'Community build, ad-hoc signed and not notarized. If macOS blocks it, try opening it once, then use System Settings → Privacy & Security → Open Anyway.',
     winNote: 'Native per-user installer. Run the EXE; unsigned builds may trigger Windows SmartScreen.',
     sourceNote: 'Corresponding source, skin, mappings, effects, scripts and documentation. No Linux binary is published.',
-    releaseNote: 'Public preview: the seven Pioneer/Roland presets and Inpulse 500 jog calibration still need physical validation. Verify downloads with SHA256SUMS.txt.',
+    releaseNote: 'The seven Pioneer/Roland presets and Inpulse 500 jog calibration still need physical validation. Verify downloads with SHA256SUMS.txt.',
     guideLink: 'Controller guide', testLink: 'Test report', checksumsLink: 'SHA-256 checksums', releaseLink: 'View GitHub release',
     setupEyebrow: 'Getting started', setupTitle: 'How to use your Rekordbox USB in NauticMixxx.',
     setupIntro: 'Use a Rekordbox-exported USB drive. NauticMixxx reads its catalog and playlists without scanning a local music folder.',
@@ -255,7 +253,7 @@ const copy = {
       { q: 'Can it damage or reconfigure the music on my drive?', a: 'The USB workflow is designed as read-only. It does not persist tracks in the local collection, export them, rewrite them or submit them to local analysis jobs. Still, always keep a backup of any performance drive.' },
       { q: 'What happens if I unplug the drive?', a: 'The USB session is invalidated, the device is removed from the browser and its paths remain write-protected. For safe performance practice, stop playback and eject the device from the operating system first.' },
       { q: 'Which controllers have RX3 presets?', a: 'Inpulse 500 has a dedicated mapping. Version 1.5 includes presets for DDJ-400, DDJ-SX, DDJ-SX2, DDJ-SX3, DDJ-WeGO3, DDJ-FLX4 and Roland DJ-505. Physical validation is pending; SX3 is experimental. FLX6 retains a browser-only preset.' },
-      { q: 'Where are the 1.5.0 installers?', a: 'GitHub Releases provides a DMG for Apple Silicon macOS and an EXE for Windows x64, plus source and SHA-256 checksums. No Linux binary is published in this version.' },
+      { q: 'Where are the latest installers?', a: 'On GitHub Releases. This page checks the latest published release and links to its available files. If an installer is missing, its link opens the release downloads.' },
     ],
     footerLine: 'Free DJ software, made to perform.', creditsTitle: 'Open-source credits',
     credits: 'Adaptation under GNU GPL v3.0. Mixxx 2.5.6 engine under GNU GPL v2.0 or later. Code, patches and attributions are publicly available.',
@@ -386,7 +384,20 @@ export default function App({ initialLanguage = 'es' }: { initialLanguage?: Lang
   const language = initialLanguage;
   const [activeTab, setActiveTab] = useState<ScreenshotTab>('performance');
   const [zoomOpen, setZoomOpen] = useState(false);
-  const t = copy[language];
+  const release = useNauticRelease();
+  const localCopy = copy[language];
+  const versionText = (text: string) => text.replaceAll('{version}', release.version);
+  const viewDownloads = language === 'es' ? 'Ver descargas' : 'View downloads';
+  const t = {
+    ...localCopy,
+    navCta: versionText(localCopy.navCta), primaryCta: versionText(localCopy.primaryCta),
+    eyebrow: versionText(localCopy.eyebrow), downloadEyebrow: versionText(localCopy.downloadEyebrow),
+    downloadText: versionText(localCopy.downloadText),
+    sourceFormat: `${release.source.format} · ${release.tag}`,
+    macFormat: release.mac?.format ?? 'GitHub Releases', winFormat: release.windows?.format ?? 'GitHub Releases',
+    macDownload: release.mac ? `${language === 'es' ? 'Descargar' : 'Download'} ${release.mac.format}` : viewDownloads,
+    winDownload: release.windows ? `${language === 'es' ? 'Descargar' : 'Download'} ${release.windows.format}` : viewDownloads,
+  };
   const currentScreenshot = t.screenshots.find((item) => item.id === activeTab) ?? t.screenshots[0];
 
   useEffect(() => {
@@ -456,7 +467,7 @@ export default function App({ initialLanguage = 'es' }: { initialLanguage?: Lang
         <div className="section-intro"><span className="section-number">01</span><div><p className="section-eyebrow">{t.whyEyebrow}</p><h2>{t.whyTitle}</h2><p>{t.whyText}</p></div></div>
         <div className="feature-grid">{features.map(({ icon: Icon, title, text, code }, index) => <article className={`feature-card ${index === 0 ? 'feature-card--accent' : ''}`} key={title}><div className="feature-card-top"><span>0{index + 1}</span><code>{code}</code></div><Icon size={27} /><h3>{title}</h3><p>{text}</p></article>)}</div>
         <div className="release-changes"><span>{t.whatsNewLabel}</span><div>{t.whatsNew.map((item) => <article key={item.title}><h3>{item.title}</h3><p>{item.text}</p></article>)}</div></div>
-        <div className="evidence-links"><a href={CONTROLLER_GUIDE} target="_blank" rel="noreferrer">{t.guideLink}<ExternalLink size={14} /></a><a href={TEST_REPORT} target="_blank" rel="noreferrer">{t.testLink}<ExternalLink size={14} /></a></div>
+        <div className="evidence-links"><a href={release.controllerGuide} target="_blank" rel="noreferrer">{t.guideLink}<ExternalLink size={14} /></a><a href={release.testReport} target="_blank" rel="noreferrer">{t.testLink}<ExternalLink size={14} /></a></div>
       </section>
 
       <section className="gallery section" id="screens">
@@ -511,19 +522,20 @@ export default function App({ initialLanguage = 'es' }: { initialLanguage?: Lang
 
       <section className="downloads section" id="download">
         <div className="download-heading"><div><p className="section-eyebrow">{t.downloadEyebrow}</p><h2>{t.downloadTitle}</h2></div><p>{t.downloadText}</p></div>
+        <p className="release-title"><a href={release.page} target="_blank" rel="noreferrer">{release.name} <ExternalLink size={14} /></a></p>
         <div className="download-grid">
-          <article className="download-card"><div className="download-platform"><Laptop size={24} /><span>{t.macFormat}</span></div><h3>{t.macTitle}</h3><p className="download-meta">{t.macMeta}</p><a className="download-active" href={MAC_DOWNLOAD}><Download size={17} />{t.macDownload}</a><p className="download-note">{t.macNote}</p></article>
-          <article className="download-card"><div className="download-platform"><Monitor size={24} /><span>{t.winFormat}</span></div><h3>{t.winTitle}</h3><p className="download-meta">{t.winMeta}</p><a className="download-active" href={WINDOWS_DOWNLOAD}><Download size={17} />{t.winDownload}</a><p className="download-note">{t.winNote}</p></article>
-          <article className="download-card download-card--source"><div className="download-platform"><Terminal size={24} /><span>{t.sourceFormat}</span></div><h3>{t.sourceTitle}</h3><p className="download-meta">{t.sourceMeta}</p><a className="download-active" href={SOURCE_ARCHIVE}><Download size={17} />{t.sourceDownload}</a><a className="download-code-link" href={SOURCE_TAG} target="_blank" rel="noreferrer">{t.browseCode}<ExternalLink size={13} /></a><p className="download-note">{t.sourceNote}</p></article>
+          <article className="download-card"><div className="download-platform"><Laptop size={24} /><span>{t.macFormat}</span></div><h3>{t.macTitle}</h3><p className="download-meta">{t.macMeta}</p><a className="download-active" href={release.mac?.url ?? release.page}><Download size={17} />{t.macDownload}</a><p className="download-note">{t.macNote}</p></article>
+          <article className="download-card"><div className="download-platform"><Monitor size={24} /><span>{t.winFormat}</span></div><h3>{t.winTitle}</h3><p className="download-meta">{t.winMeta}</p><a className="download-active" href={release.windows?.url ?? release.page}><Download size={17} />{t.winDownload}</a><p className="download-note">{t.winNote}</p></article>
+          <article className="download-card download-card--source"><div className="download-platform"><Terminal size={24} /><span>{t.sourceFormat}</span></div><h3>{t.sourceTitle}</h3><p className="download-meta">{t.sourceMeta}</p><a className="download-active" href={release.source.url}><Download size={17} />{t.sourceDownload}</a><a className="download-code-link" href={release.sourceTag} target="_blank" rel="noreferrer">{t.browseCode}<ExternalLink size={13} /></a><p className="download-note">{t.sourceNote}</p></article>
         </div>
         <div className="release-honesty"><ShieldCheck size={18} /><p>{t.releaseNote}</p></div>
-        <div className="evidence-links evidence-links--downloads"><a href={RELEASE_PAGE} target="_blank" rel="noreferrer">{t.releaseLink}<ExternalLink size={14} /></a><a href={CHECKSUMS} target="_blank" rel="noreferrer">{t.checksumsLink}<ExternalLink size={14} /></a></div>
+        <div className="evidence-links evidence-links--downloads"><a href={release.page} target="_blank" rel="noreferrer">{t.releaseLink}<ExternalLink size={14} /></a>{release.checksums && <a href={release.checksums} target="_blank" rel="noreferrer">{t.checksumsLink}<ExternalLink size={14} /></a>}</div>
       </section>
 
       <section className="setup section" id="start">
         <div className="setup-heading"><p className="section-eyebrow">{t.setupEyebrow}</p><h2>{t.setupTitle}</h2><p>{t.setupIntro}</p></div>
         <ol className="setup-steps" role="list">{t.setupSteps.map((step) => <li key={step.title}><h3>{step.title}</h3><p>{step.text}</p></li>)}</ol>
-        <div className="evidence-links"><a href={INSTALLATION_GUIDE} target="_blank" rel="noreferrer">{t.installationLink}<ExternalLink size={14} /></a><a href={`${SOURCE_REPO}/issues`} target="_blank" rel="noreferrer">{t.supportLink}<ExternalLink size={14} /></a></div>
+        <div className="evidence-links"><a href={release.installationGuide} target="_blank" rel="noreferrer">{t.installationLink}<ExternalLink size={14} /></a><a href={`${SOURCE_REPO}/issues`} target="_blank" rel="noreferrer">{t.supportLink}<ExternalLink size={14} /></a></div>
       </section>
 
       <section className="faq section" id="faq">
@@ -533,7 +545,7 @@ export default function App({ initialLanguage = 'es' }: { initialLanguage?: Lang
     </main>
     <footer className="site-footer">
       <div className="footer-top"><a className="brand" href="#top"><img src="/icons/nauticmixxx-64.png" srcSet="/icons/nauticmixxx-64.png 64w, /icons/nauticmixxx-128.png 128w" sizes="38px" width="38" height="38" alt="" loading="lazy" /><span>NauticMixxx</span></a><p>{t.footerLine}</p><a href="#top">{t.backTop}<ArrowRight size={14} /></a></div>
-      <div className="footer-legal"><div><h3>{t.creditsTitle}</h3><p>{t.credits}</p><a href={`${SOURCE_REPO}/blob/v${RELEASE_VERSION}/LICENSE.md`} target="_blank" rel="noreferrer">LICENSE.md <ExternalLink size={12} /></a></div><div><h3>{t.disclaimerTitle}</h3><p>{t.disclaimer}</p><a href={`${SOURCE_REPO}/blob/v${RELEASE_VERSION}/TRADEMARKS.md`} target="_blank" rel="noreferrer">TRADEMARKS.md <ExternalLink size={12} /></a></div></div>
+      <div className="footer-legal"><div><h3>{t.creditsTitle}</h3><p>{t.credits}</p><a href={release.license} target="_blank" rel="noreferrer">LICENSE.md <ExternalLink size={12} /></a></div><div><h3>{t.disclaimerTitle}</h3><p>{t.disclaimer}</p><a href={release.trademarks} target="_blank" rel="noreferrer">TRADEMARKS.md <ExternalLink size={12} /></a></div></div>
     </footer>
 
     {zoomOpen && (
