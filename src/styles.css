@@ -106,7 +106,8 @@ a {
 }
 
 .brand img {
-  border-radius: 10px;
+  border-radius: 0;
+  object-fit: contain;
   box-shadow: 0 4px 12px rgba(23, 23, 21, 0.18);
 }
 
@@ -137,6 +138,9 @@ footer > a:hover {
 }
 
 .language-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-width: 38px;
   padding: 10px 8px;
   border: 0;
@@ -2800,12 +2804,12 @@ body::before {
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
   transition: transform 300ms var(--ease);
 }
 
 .screenshot-viewport:hover .screenshot-image {
-  transform: scale(1.015);
+  transform: scale(1);
 }
 
 .screenshot-hover-hint {
@@ -2931,7 +2935,7 @@ body::before {
   display: block;
   width: 64px;
   height: 40px;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 4px;
 }
 
@@ -2945,7 +2949,7 @@ body::before {
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 22px;
 }
 
@@ -2982,13 +2986,13 @@ body::before {
 .gallery-card-media img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
   transition: transform 300ms var(--ease);
 }
 
 .gallery-card:hover .gallery-card-media img {
-  transform: scale(1.03);
+  transform: scale(1);
 }
 
 .gallery-card-zoom {
@@ -3158,6 +3162,7 @@ body::before {
 
 .lightbox-viewport {
   position: relative;
+  position: relative;
   width: 100%;
   aspect-ratio: 16 / 10;
   max-height: 68vh;
@@ -3168,6 +3173,8 @@ body::before {
 }
 
 .lightbox-image {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -3220,4 +3227,134 @@ body::before {
 
 @media (max-width: 1120px) {
   .hero::before { display: none; }
+}
+
+.evidence-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.evidence-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  color: #d7e2e8;
+  font-size: 12px;
+  font-weight: 600;
+  transition: border-color 180ms ease, background 180ms ease;
+}
+
+.evidence-links a:hover,
+.evidence-links a:focus-visible {
+  border-color: var(--cyan);
+  background: rgba(0, 182, 200, 0.1);
+}
+
+.evidence-links--downloads {
+  justify-content: center;
+}
+
+.release-changes {
+  display: grid;
+  grid-template-columns: minmax(140px, 0.5fr) 2fr;
+  gap: 28px;
+  margin-top: 20px;
+  padding: 26px 30px;
+  border: 1px solid rgba(0, 182, 200, 0.2);
+  border-radius: 20px;
+  background: rgba(0, 182, 200, 0.04);
+}
+
+.release-changes > span {
+  color: var(--cyan);
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.release-changes > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.release-changes h3 {
+  margin: 0 0 8px;
+  color: #fff;
+  font-size: 15px;
+}
+
+.release-changes p {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .release-changes { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .release-changes > div { grid-template-columns: 1fr; }
+}
+
+.setup {
+  padding: 0 0 110px;
+}
+
+.setup-heading {
+  max-width: 800px;
+}
+
+.setup-heading > p:last-child,
+.setup-steps p {
+  color: var(--ink-muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.setup-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 42px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: setup;
+}
+
+.setup-steps li {
+  counter-increment: setup;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.setup-steps li::before {
+  content: counter(setup, decimal-leading-zero);
+  display: block;
+  margin-bottom: 24px;
+  color: var(--cyan);
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+}
+
+.setup-steps h3 {
+  margin: 0 0 12px;
+  color: #fff;
+  font-size: 18px;
+}
+
+.setup-steps p { margin: 0; }
+
+@media (max-width: 800px) {
+  .setup-steps { grid-template-columns: 1fr; }
 }
