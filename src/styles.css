@@ -2953,6 +2953,48 @@ body::before {
   gap: 22px;
 }
 
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  margin-bottom: 32px;
+}
+
+.video-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(0, 182, 200, 0.28);
+  border-radius: 16px;
+  background: #0a0c0e;
+}
+
+.video-card video {
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: contain;
+  background: #000;
+}
+
+.video-card h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.video-card p {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.gallery-card--decks {
+  grid-column: 1 / -1;
+}
+
 .gallery-card {
   display: flex;
   flex-direction: column;
@@ -3195,7 +3237,8 @@ body::before {
 }
 
 @media (max-width: 960px) {
-  .gallery-grid {
+  .gallery-grid,
+  .video-grid {
     grid-template-columns: 1fr;
     gap: 20px;
   }

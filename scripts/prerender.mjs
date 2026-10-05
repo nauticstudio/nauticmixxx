@@ -27,7 +27,7 @@ try {
 
   for (const [language, seo] of Object.entries(product.PAGE_SEO)) {
     const canonical = product.SITE_URL + seo.path;
-    const preview = product.SITE_URL + '/media/nauticmixxx-performance.png';
+    const preview = product.SITE_URL + '/media/nauticmixxx-waveforms-playing.png';
     const graph = {
       '@context': 'https://schema.org',
       '@graph': [
@@ -86,7 +86,7 @@ try {
       '<meta property="og:image" content="' + preview + '" />',
       '<meta property="og:image:width" content="1392" />',
       '<meta property="og:image:height" content="874" />',
-      '<meta property="og:image:alt" content="' + (language === 'es' ? 'Vista PERFORMANCE de NauticMixxx del README oficial' : 'NauticMixxx PERFORMANCE view from the official README') + '" />',
+      '<meta property="og:image:alt" content="' + (language === 'es' ? 'NauticMixxx reproduciendo dos pistas con formas de onda y Hot Cues' : 'NauticMixxx playing two tracks with waveforms and Hot Cues') + '" />',
       '<meta name="twitter:card" content="summary_large_image" />',
       '<meta name="twitter:title" content="' + escapeAttribute(seo.title) + '" />',
       '<meta name="twitter:description" content="' + escapeAttribute(seo.description) + '" />',

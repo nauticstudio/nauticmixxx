@@ -11,11 +11,27 @@ npm run dev
 
 ## Contenido y recursos
 
-- `public/media/`: capturas de inicio y PERFORMANCE del [README oficial](https://github.com/nauticsoftware/NauticMixxx/blob/56267f5f838a555f97e734bc3b5223d7eaa6fe70/README.md), copiadas de `branding/NauticMixxx_Home.png` y `branding/NauticMixxx_Performance.png`. Se muestran completas con versiones WebP sin pérdida. Las capturas adicionales de waveforms y navegador se identifican como históricas.
+- `public/media/`: videos de reproducción y navegación, cuatro capturas suministradas el 5 de octubre de 2026 y la captura del navegador conservada por elección del usuario. Las capturas anteriores de inicio, PERFORMANCE, waveforms y standby se eliminaron. Las imágenes se muestran completas con versiones WebP sin pérdida, variantes de 512 px y miniaturas.
 - `src/App.tsx`, componente `ScreenshotViewer`: visualizador interactivo de capturas de la aplicación con pestañas y zoom lightbox.
 - `branding/`: fuente del icono oficial de NauticMixxx, verificada por SHA-256 contra el repositorio del producto.
 - `public/icons/`: tamaños del icono oficial para cabecera, footer, favicon, Apple Touch y datos estructurados.
 - `index.html`: canonical, metadatos Open Graph y Twitter Cards con imagen de previsualización social.
+
+### Videos y capturas incorporados el 5 de octubre de 2026
+
+Integrados en la portada y en la galería de la web, en español e inglés:
+
+| Archivo / URL pública | Contenido |
+| --- | --- |
+| `/media/nauticmixxx-playing.mp4` | Video de reproducción (`NM_Playing.mp4`). |
+| `/media/nauticmixxx-browsing.mp4` | Video de navegación (`NM_Browsing.mp4`). |
+| `/media/nauticmixxx-browser.png` | Navegador de playlists y pistas; captura adjuntada y conservada por el usuario. |
+| `/media/nauticmixxx-empty-decks.png` | Interfaz sin pistas cargadas (captura de las 13:15:42). |
+| `/media/nauticmixxx-decks-overview.png` | Detalle de los dos decks con pistas cargadas (`123.png`). |
+| `/media/nauticmixxx-waveforms-playing.png` | Vista completa de reproducción con formas de onda (captura de las 14:56:03). |
+| `/media/nauticmixxx-waveforms-mixing.png` | Vista completa de mezcla con formas de onda (captura de las 14:56:10). |
+
+Los MP4 se presentan como capturas animadas: reproducción automática, continua y en bucle, sin sonido ni controles, con `playsInline` y `preload="auto"`. No reciben clics ni foco de teclado y deshabilitan Picture-in-Picture y reproducción remota. Las capturas se usan como posters mientras cargan. Los MP4 no contienen pistas de audio y se prepararon con `faststart` sin recodificar el video. La captura de reproducción se usa para Open Graph y Twitter Cards.
 
 ## SEO y páginas estáticas
 

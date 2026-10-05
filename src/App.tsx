@@ -19,7 +19,6 @@ import {
   Maximize2,
   Monitor,
   MousePointer2,
-  Play,
   RotateCcw,
   ShieldCheck,
   SlidersHorizontal,
@@ -30,7 +29,7 @@ import {
 } from 'lucide-react';
 
 type Language = 'es' | 'en';
-type ScreenshotTab = 'performance' | 'waveforms' | 'browser' | 'standby';
+type ScreenshotTab = 'performance' | 'waveforms' | 'browser' | 'standby' | 'decks';
 
 interface ScreenshotItem {
   id: ScreenshotTab;
@@ -46,7 +45,7 @@ interface ScreenshotItem {
 
 const copy = {
   es: {
-    navAbout: 'Qué es', navFeatures: 'Funciones', navScreens: 'Capturas', navDownload: 'Descargas', navFaq: 'FAQ', navCta: 'Descargar v{version}',
+    navAbout: 'Qué es', navFeatures: 'Funciones', navScreens: 'En acción', navDownload: 'Descargas', navFaq: 'FAQ', navCta: 'Descargar v{version}',
     eyebrow: 'v{version} · Última versión publicada · Mixxx 2.5.6',
     titleA: 'Tu USB de Rekordbox.', titleB: 'Directo a la pista.',
     hero: 'NauticMixxx es una edición comunitaria de Mixxx 2.5.6 para macOS y Windows, con dos decks y una interfaz inspirada en la XDJ-RX3.',
@@ -55,49 +54,63 @@ const copy = {
     readOnly: 'USB en modo lectura', noFiles: 'Sin escaneo local', noAccount: 'Sin registro', free: 'Código abierto · GPL',
     previewLabel: 'Capturas reales de NauticMixxx', previewHint: 'Clic para cambiar o ampliar',
     zoomLabel: 'Ampliar captura', closeZoom: 'Cerrar vista previa', releaseStatus: 'Última versión publicada',
-    galleryEyebrow: 'Capturas de pantalla', galleryTitle: 'La interfaz en acción.',
-    galleryText: 'Vistas de inicio y PERFORMANCE del README oficial, junto con capturas históricas del navegador y los efectos.',
+    galleryEyebrow: 'La interfaz en movimiento', galleryTitle: 'La interfaz en acción.',
+    galleryText: 'Explorá la reproducción y la navegación en movimiento, junto con las capturas de mezcla, playlists y controles de los decks.',
     screenshots: [
       {
         id: 'performance' as const,
-        tabLabel: 'PERFORMANCE',
-        badge: 'README OFICIAL',
-        title: 'Dos decks y waveforms en PERFORMANCE',
-        description: 'Captura del README oficial con pistas cargadas, formas de onda RGB y Hot Cues en ambos decks.',
-        src: '/media/nauticmixxx-performance.webp',
-        alt: 'Vista PERFORMANCE de NauticMixxx con dos pistas cargadas, waveforms RGB y Hot Cues',
+        tabLabel: 'Reproducción',
+        badge: 'DECKS EN ACCIÓN',
+        title: 'Dos decks, formas de onda y Hot Cues',
+        description: 'Vista completa de reproducción con dos pistas cargadas, beatgrid y Hot Cues en ambos decks.',
+        src: '/media/nauticmixxx-waveforms-playing.webp',
+        alt: 'NauticMixxx reproduciendo dos pistas con formas de onda y Hot Cues',
         width: 1392, height: 874,
       },
       {
         id: 'waveforms' as const,
-        tabLabel: 'Waveforms & FX',
-        badge: 'DECK 1 & 2 EN VIVO',
-        title: 'Waveforms tri-banda ANLZ y sincronización',
-        description: 'Vista PERFORMANCE de dos decks con formas de onda, beatgrid y efectos. Captura de una versión anterior.',
-        src: '/media/nauticmixxx-waveforms.webp',
-        alt: 'NauticMixxx reproduciendo dos decks con waveforms tri-banda y sección de efectos',
-        width: 1024, height: 640,
+        tabLabel: 'Mezcla',
+        badge: 'WAVEFORMS & BEATGRID',
+        title: 'La mezcla, a la vista',
+        description: 'Formas de onda de ambos decks, tempo y sección Beat FX durante una mezcla.',
+        src: '/media/nauticmixxx-waveforms-mixing.webp',
+        alt: 'Vista de mezcla de NauticMixxx con dos formas de onda, tempo y Beat FX',
+        width: 1392, height: 874,
       },
       {
         id: 'browser' as const,
         tabLabel: 'Navegador Rekordbox',
         badge: 'LECTURA DIRECTA USB',
-        title: 'Navegación nativa de playlists y preview de pistas',
-        description: 'Navegador de playlists y pistas de un USB exportado por Rekordbox. Captura de una versión anterior.',
+        title: 'Playlists y previsualización de pistas',
+        description: 'Navegador de playlists y pistas de un USB exportado por Rekordbox, con previews de formas de onda.',
         src: '/media/nauticmixxx-browser.webp',
-        alt: 'Navegador de playlists y tracks de Rekordbox en NauticMixxx',
+        alt: 'Navegador de playlists y pistas de Rekordbox en NauticMixxx',
         width: 1024, height: 640,
       },
       {
         id: 'standby' as const,
         tabLabel: 'Inicio / Standby',
-        badge: 'STANDALONE WORKFLOW',
-        title: 'Pantalla de inicio y detección USB',
-        description: 'Pantalla de inicio del README oficial, con el logotipo NauticMixxx y los dos decks antes de cargar pistas.',
-        src: '/media/nauticmixxx-home.webp',
-        alt: 'Pantalla de espera y standby de NauticMixxx con decks listos',
+        badge: 'LISTO PARA CARGAR',
+        title: 'Dos decks listos para tu set',
+        description: 'Pantalla de inicio con el logotipo NauticMixxx y los dos decks antes de cargar pistas.',
+        src: '/media/nauticmixxx-empty-decks.webp',
+        alt: 'Pantalla de inicio de NauticMixxx con los dos decks sin pistas cargadas',
         width: 1392, height: 874,
       },
+      {
+        id: 'decks' as const,
+        tabLabel: 'Detalle de decks',
+        badge: 'TEMPO & HOT CUES',
+        title: 'Los controles de los dos decks',
+        description: 'Detalle de tiempo restante, tempo, BPM, Hot Cues y formas de onda de resumen de ambos decks.',
+        src: '/media/nauticmixxx-decks-overview.webp',
+        alt: 'Detalle de los dos decks de NauticMixxx con BPM, tempo, Hot Cues y formas de onda',
+        width: 1392, height: 238,
+      },
+    ],
+    videos: [
+      { id: 'playing', title: 'Reproducción en vivo', description: 'Dos decks reproduciendo pistas, con formas de onda y Hot Cues en acción.', src: '/media/nauticmixxx-playing.mp4', poster: '/media/nauticmixxx-waveforms-playing.webp' },
+      { id: 'browsing', title: 'Navegación de playlists', description: 'Recorré el navegador y las pistas de un USB exportado por Rekordbox.', src: '/media/nauticmixxx-browsing.mp4', poster: '/media/nauticmixxx-browser.webp' },
     ],
     aboutEyebrow: 'Antes que nada', aboutTitle: 'Es una app. No toca tu XDJ.',
     aboutText: 'NauticMixxx corre en tu computadora y se controla con hardware DJ convencional. No reemplaza el sistema de una Pioneer real y su experiencia completa va mucho más allá de un cambio visual.',
@@ -154,7 +167,7 @@ const copy = {
     backTop: 'Volver arriba',
   },
   en: {
-    navAbout: 'What it is', navFeatures: 'Features', navScreens: 'Screenshots', navDownload: 'Downloads', navFaq: 'FAQ', navCta: 'Download v{version}',
+    navAbout: 'What it is', navFeatures: 'Features', navScreens: 'In action', navDownload: 'Downloads', navFaq: 'FAQ', navCta: 'Download v{version}',
     eyebrow: 'v{version} · Latest published release · Mixxx 2.5.6',
     titleA: 'Your Rekordbox USB.', titleB: 'Straight to the decks.',
     hero: 'NauticMixxx is a community edition of Mixxx 2.5.6 for macOS and Windows, with two decks and an XDJ-RX3-inspired interface.',
@@ -163,35 +176,35 @@ const copy = {
     readOnly: 'Read-only USB mode', noFiles: 'No local scanning', noAccount: 'No account', free: 'Open source · GPL',
     previewLabel: 'Real NauticMixxx screenshots', previewHint: 'Click to switch view or expand',
     zoomLabel: 'Expand capture', closeZoom: 'Close preview', releaseStatus: 'Latest published release',
-    galleryEyebrow: 'Interface screenshots', galleryTitle: 'The interface in action.',
-    galleryText: 'Startup and PERFORMANCE views from the official README, alongside historical browser and effects screenshots.',
+    galleryEyebrow: 'The interface in motion', galleryTitle: 'The interface in action.',
+    galleryText: 'See playback and browsing in motion, alongside screenshots of mixing, playlists and deck controls.',
     screenshots: [
       {
         id: 'performance' as const,
-        tabLabel: 'PERFORMANCE',
-        badge: 'OFFICIAL README',
-        title: 'Two decks and waveforms in PERFORMANCE',
-        description: 'Official README screenshot with loaded tracks, RGB waveforms and Hot Cues on both decks.',
-        src: '/media/nauticmixxx-performance.webp',
-        alt: 'NauticMixxx PERFORMANCE view with two loaded tracks, RGB waveforms and Hot Cues',
+        tabLabel: 'Playback',
+        badge: 'DECKS IN ACTION',
+        title: 'Two decks, waveforms and Hot Cues',
+        description: 'Full playback view with two loaded tracks, beatgrid and Hot Cues on both decks.',
+        src: '/media/nauticmixxx-waveforms-playing.webp',
+        alt: 'NauticMixxx playing two tracks with waveforms and Hot Cues',
         width: 1392, height: 874,
       },
       {
         id: 'waveforms' as const,
-        tabLabel: 'Waveforms & FX',
-        badge: 'LIVE DECKS 1 & 2',
-        title: '3-Band ANLZ Waveforms & Sync',
-        description: 'Two-deck PERFORMANCE view with waveforms, beatgrid and effects. Screenshot from an earlier version.',
-        src: '/media/nauticmixxx-waveforms.webp',
-        alt: 'NauticMixxx running dual decks with 3-band waveforms and Beat FX section',
-        width: 1024, height: 640,
+        tabLabel: 'Mixing',
+        badge: 'WAVEFORMS & BEATGRID',
+        title: 'See the mix unfold',
+        description: 'Waveforms for both decks, tempo and the Beat FX section during a mix.',
+        src: '/media/nauticmixxx-waveforms-mixing.webp',
+        alt: 'NauticMixxx mixing view with two waveforms, tempo and Beat FX',
+        width: 1392, height: 874,
       },
       {
         id: 'browser' as const,
         tabLabel: 'Rekordbox Browser',
         badge: 'DIRECT USB READ',
-        title: 'Native Playlist Navigation & Track Previews',
-        description: 'Playlist and track browser for a Rekordbox-exported USB. Screenshot from an earlier version.',
+        title: 'Playlists and track previews',
+        description: 'Playlist and track browser for a Rekordbox-exported USB, with waveform previews.',
         src: '/media/nauticmixxx-browser.webp',
         alt: 'Rekordbox playlist and track browser in NauticMixxx',
         width: 1024, height: 640,
@@ -199,13 +212,27 @@ const copy = {
       {
         id: 'standby' as const,
         tabLabel: 'Startup / Standby',
-        badge: 'STANDALONE WORKFLOW',
-        title: 'Startup Screen & USB Detection',
-        description: 'Startup screen from the official README, with the NauticMixxx logo and both decks before loading tracks.',
-        src: '/media/nauticmixxx-home.webp',
-        alt: 'NauticMixxx standby screen with ready decks',
+        badge: 'READY TO LOAD',
+        title: 'Two decks ready for your set',
+        description: 'Startup screen with the NauticMixxx logo and both decks before loading tracks.',
+        src: '/media/nauticmixxx-empty-decks.webp',
+        alt: 'NauticMixxx startup screen with both decks empty',
         width: 1392, height: 874,
       },
+      {
+        id: 'decks' as const,
+        tabLabel: 'Deck details',
+        badge: 'TEMPO & HOT CUES',
+        title: 'Both decks, in detail',
+        description: 'A closer look at remaining time, tempo, BPM, Hot Cues and overview waveforms on both decks.',
+        src: '/media/nauticmixxx-decks-overview.webp',
+        alt: 'NauticMixxx deck details showing BPM, tempo, Hot Cues and overview waveforms',
+        width: 1392, height: 238,
+      },
+    ],
+    videos: [
+      { id: 'playing', title: 'Live playback', description: 'Two decks playing tracks, with waveforms and Hot Cues in action.', src: '/media/nauticmixxx-playing.mp4', poster: '/media/nauticmixxx-waveforms-playing.webp' },
+      { id: 'browsing', title: 'Playlist browsing', description: 'Explore the browser and tracks on a Rekordbox-exported USB.', src: '/media/nauticmixxx-browsing.mp4', poster: '/media/nauticmixxx-browser.webp' },
     ],
     aboutEyebrow: 'First things first', aboutTitle: 'It’s an app. It never touches your XDJ.',
     aboutText: 'NauticMixxx runs on your computer and is controlled with everyday DJ hardware. It does not replace a real Pioneer system, and the complete experience goes far beyond a visual reskin.',
@@ -282,7 +309,7 @@ function ScreenshotViewer({
     <div className="screenshot-shell">
       <div className="window-bar">
         <div className="traffic-lights" aria-hidden="true"><i /><i /><i /></div>
-        <span className="window-project">NAUTICMIXXX — {current.id === 'performance' || current.id === 'standby' ? 'README' : 'EARLIER VERSION CAPTURE'}</span>
+        <span className="window-project">NAUTICMIXXX — {current.tabLabel}</span>
         <span className="window-state"><i /> 100% READ ONLY</span>
       </div>
 
@@ -302,6 +329,7 @@ function ScreenshotViewer({
                 {(item.id === 'waveforms' || item.id === 'performance') && <Waves size={13} />}
                 {item.id === 'browser' && <Database size={13} />}
                 {item.id === 'standby' && <Monitor size={13} />}
+                {item.id === 'decks' && <SlidersHorizontal size={13} />}
                 <span>{item.tabLabel}</span>
               </button>
             );
@@ -479,11 +507,38 @@ export default function App({ initialLanguage = 'es' }: { initialLanguage?: Lang
             <p>{t.galleryText}</p>
           </div>
         </div>
+        <div className="video-grid">
+          {t.videos.map((video) => (
+            <article className="video-card" key={video.id}>
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                disablePictureInPicture
+                disableRemotePlayback
+                tabIndex={-1}
+                preload="auto"
+                poster={video.poster}
+                width="1728"
+                height="1080"
+                aria-label={video.title}
+                aria-describedby={`video-${video.id}-description`}
+              >
+                <source src={video.src} type="video/mp4" />
+              </video>
+              <div className="gallery-card-body">
+                <h3>{video.title}</h3>
+                <p id={`video-${video.id}-description`}>{video.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
         <div className="gallery-grid">
           {t.screenshots.map((s, index) => (
             <article
               key={s.id}
-              className={`gallery-card ${activeTab === s.id ? 'gallery-card--active' : ''}`}
+              className={`gallery-card ${s.id === 'decks' ? 'gallery-card--decks' : ''} ${activeTab === s.id ? 'gallery-card--active' : ''}`}
               onClick={() => {
                 setActiveTab(s.id);
                 setZoomOpen(true);
@@ -498,8 +553,8 @@ export default function App({ initialLanguage = 'es' }: { initialLanguage?: Lang
                 }
               }}
             >
-              <div className="gallery-card-media">
-                <img src={s.src} srcSet={`${s.src.replace('.webp', '-512.webp')} 512w, ${s.src} ${s.width}w`} sizes="(max-width: 960px) calc(100vw - 48px), 600px" alt={s.alt} width={s.width} height={s.height} loading="lazy" decoding="async" />
+              <div className="gallery-card-media" style={{ aspectRatio: `${s.width} / ${s.height}` }}>
+                <img src={s.src} srcSet={`${s.src.replace('.webp', '-512.webp')} 512w, ${s.src} ${s.width}w`} sizes={s.id === 'decks' ? '(max-width: 960px) calc(100vw - 48px), 1200px' : '(max-width: 960px) calc(100vw - 48px), 600px'} alt={s.alt} width={s.width} height={s.height} loading="lazy" decoding="async" />
                 <span className="gallery-card-zoom"><Maximize2 size={16} /></span>
               </div>
               <div className="gallery-card-body">
@@ -553,6 +608,7 @@ export default function App({ initialLanguage = 'es' }: { initialLanguage?: Lang
         className="lightbox-overlay"
         role="dialog"
         aria-modal="true"
+        aria-label={currentScreenshot.title}
         onClick={() => setZoomOpen(false)}
       >
         <div className="lightbox-modal" onClick={(e) => e.stopPropagation()}>
