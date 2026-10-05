@@ -1,64 +1,102 @@
 # NauticMixxx Web
 
-Landing de NauticMixxx. Está construida como una aplicación Vite + React independiente para publicarse en `nauticmixxx.nauticboy.top`.
+## Tu USB de Rekordbox. Directo a la pista.
 
-## Desarrollo
+NauticMixxx es una aplicación DJ de código abierto para macOS y Windows, basada en Mixxx 2.5.6 y con una interfaz inspirada en la XDJ-RX3. Conectá un USB exportado por Rekordbox, navegá tus playlists y cargá pistas en dos decks para practicar o preparar tu próximo set.
+
+**[Visitar la web](https://nauticmixxx.nauticboy.top/) · [English](https://nauticmixxx.nauticboy.top/en/) · [Descargar NauticMixxx](https://github.com/nauticsoftware/NauticMixxx/releases/latest)**
+
+![NauticMixxx reproduciendo dos pistas con formas de onda y Hot Cues](public/media/nauticmixxx-waveforms-playing.webp)
+
+**USB en modo lectura · Sin escaneo local · Sin registro · Código abierto**
+
+## Preparaste el set una vez. Usalo en todas partes.
+
+La web presenta un flujo de trabajo pensado para DJs que preparan su música en Rekordbox y quieren usar esa preparación en una computadora con controladoras DJ.
+
+- **Lectura directa del USB.** Navegación del catálogo y las playlists exportadas por Rekordbox, sin importar las pistas a la colección local.
+- **Tu preparación, a la vista.** Formas de onda, beatgrid, overviews y hasta ocho Hot Cues por deck.
+- **Dos decks para mezclar.** Tiempo restante, BPM, tempo y controles de reproducción, junto con la sección Beat FX.
+- **Control desde el hardware.** Mapeo dedicado para Hercules Inpulse 500 y presets RX3 para distintas controladoras Pioneer y Roland.
+- **Descargas y documentación.** Acceso a instaladores, código fuente, notas de versión, guías e informes de pruebas publicados en GitHub.
+
+## La interfaz en acción
+
+En la web podés ver la reproducción y la navegación como animaciones continuas, en bucle y sin sonido. También podés recorrer las capturas y ampliarlas para observar los detalles de la interfaz.
+
+[Explorar la galería y las animaciones](https://nauticmixxx.nauticboy.top/#screens)
+
+| Navegador Rekordbox | Mezcla y formas de onda |
+| --- | --- |
+| ![Playlists y previsualización de pistas](public/media/nauticmixxx-browser.webp) | ![Dos decks durante una mezcla](public/media/nauticmixxx-waveforms-mixing.webp) |
+| Playlists, pistas y previews de formas de onda. | Beatgrid, tempo y formas de onda de ambos decks. |
+
+### Antes de cargar las pistas
+
+![Pantalla de inicio de NauticMixxx con ambos decks vacíos](public/media/nauticmixxx-empty-decks.webp)
+
+### Los controles de los dos decks
+
+![Detalle de tiempo restante, tempo, BPM y Hot Cues](public/media/nauticmixxx-decks-overview.webp)
+
+## Tu USB permanece intacto
+
+El flujo USB está diseñado para operar en modo lectura. NauticMixxx no reescribe el audio, los metadatos, las playlists ni los análisis del dispositivo, y mantiene su catálogo como una sesión transitoria.
+
+La colección local queda fuera de este navegador. Conservá una copia de seguridad de tu USB de trabajo y detené la reproducción antes de expulsarlo desde el sistema operativo.
+
+## Descargá NauticMixxx
+
+La web muestra la última versión publicada en GitHub y enlaza los archivos disponibles de esa release.
+
+| Plataforma | Descarga |
+| --- | --- |
+| macOS Apple Silicon | Instalador para ARM64. |
+| Windows x64 | Instalador nativo para Windows. |
+| Código fuente | Fuentes para compilar y revisar el proyecto. |
+
+**[Ver la última release y sus descargas](https://github.com/nauticsoftware/NauticMixxx/releases/latest)**
+
+Desde la sección de descargas también podés consultar las notas de versión, el informe de pruebas y los checksums cuando estén disponibles. Revisá las indicaciones de instalación de cada release: las builds comunitarias pueden mostrar avisos de seguridad del sistema.
+
+## Cómo empezar
+
+1. **Instalá la aplicación.** Descargá el instalador correspondiente a tu sistema desde la última release.
+2. **Configurá la salida de audio.** Elegí tu dispositivo y los canales en `Preferences → Sound Hardware`. Si usás una controladora, revisá su configuración en `Controllers`.
+3. **Conectá tu USB exportado por Rekordbox.** Esperá a que termine de cargar el catálogo y abrí `SOURCE`.
+4. **Navegá y cargá una pista.** Seleccioná una playlist, pulsá `ENTER` para abrir sus pistas y usá `LOAD 1/2` para cargar el deck correspondiente.
+
+La web incluye enlaces a la guía de instalación, la guía de controladoras y el [canal de soporte en GitHub](https://github.com/nauticsoftware/NauticMixxx/issues).
+
+## Preguntas frecuentes
+
+**¿NauticMixxx se instala en una Pioneer XDJ-RX3?**
+
+Se ejecuta en tu computadora. No se instala en equipos Pioneer ni modifica su firmware.
+
+**¿Qué controladoras se presentan en la web?**
+
+Hercules Inpulse 500 tiene un mapeo dedicado. La web también presenta presets para DDJ-400, DDJ-SX, DDJ-SX2, DDJ-SX3, DDJ-WeGO3, DDJ-FLX4 y Roland DJ-505. La validación física de esos presets está pendiente; SX3 es experimental. Consultá la guía y el informe de pruebas de la release para conocer sus límites.
+
+**¿Dónde encuentro los instaladores actualizados?**
+
+En [GitHub Releases](https://github.com/nauticsoftware/NauticMixxx/releases/latest). Si una release no incluye un instalador para tu plataforma, la web lleva a sus descargas disponibles.
+
+## Software libre y créditos
+
+NauticMixxx es un proyecto comunitario independiente. La adaptación se distribuye bajo GNU GPL v3.0 y el motor Mixxx 2.5.6 bajo GNU GPL v2.0 o posterior. El [proyecto de NauticMixxx](https://github.com/nauticsoftware/NauticMixxx) publica el código, los parches y las atribuciones.
+
+No está afiliado, patrocinado, certificado ni respaldado por AlphaTheta, Pioneer DJ, Hercules, rekordbox ni el proyecto Mixxx. Los nombres y marcas describen compatibilidad, procedencia técnica o flujo de trabajo.
+
+<details>
+<summary>Desarrollo de la web</summary>
+
+La web está construida con React y Vite, con contenido en español e inglés.
 
 ```bash
 npm install
 npm run dev
+npm run build
 ```
 
-## Contenido y recursos
-
-- `public/media/`: videos de reproducción y navegación, cuatro capturas suministradas el 5 de octubre de 2026 y la captura del navegador conservada por elección del usuario. Las capturas anteriores de inicio, PERFORMANCE, waveforms y standby se eliminaron. Las imágenes se muestran completas con versiones WebP sin pérdida, variantes de 512 px y miniaturas.
-- `src/App.tsx`, componente `ScreenshotViewer`: visualizador interactivo de capturas de la aplicación con pestañas y zoom lightbox.
-- `branding/`: fuente del icono oficial de NauticMixxx, verificada por SHA-256 contra el repositorio del producto.
-- `public/icons/`: tamaños del icono oficial para cabecera, footer, favicon, Apple Touch y datos estructurados.
-- `index.html`: canonical, metadatos Open Graph y Twitter Cards con imagen de previsualización social.
-
-### Videos y capturas incorporados el 5 de octubre de 2026
-
-Integrados en la portada y en la galería de la web, en español e inglés:
-
-| Archivo / URL pública | Contenido |
-| --- | --- |
-| `/media/nauticmixxx-playing.mp4` | Video de reproducción (`NM_Playing.mp4`). |
-| `/media/nauticmixxx-browsing.mp4` | Video de navegación (`NM_Browsing.mp4`). |
-| `/media/nauticmixxx-browser.png` | Navegador de playlists y pistas; captura adjuntada y conservada por el usuario. |
-| `/media/nauticmixxx-empty-decks.png` | Interfaz sin pistas cargadas (captura de las 13:15:42). |
-| `/media/nauticmixxx-decks-overview.png` | Detalle de los dos decks con pistas cargadas (`123.png`). |
-| `/media/nauticmixxx-waveforms-playing.png` | Vista completa de reproducción con formas de onda (captura de las 14:56:03). |
-| `/media/nauticmixxx-waveforms-mixing.png` | Vista completa de mezcla con formas de onda (captura de las 14:56:10). |
-
-Los MP4 se presentan como capturas animadas: reproducción automática, continua y en bucle, sin sonido ni controles, con `playsInline` y `preload="auto"`. No reciben clics ni foco de teclado y deshabilitan Picture-in-Picture y reproducción remota. Las capturas se usan como posters mientras cargan. Los MP4 no contienen pistas de audio y se prepararon con `faststart` sin recodificar el video. La captura de reproducción se usa para Open Graph y Twitter Cards.
-
-## SEO y páginas estáticas
-
-`npm run build` compila Vite y ejecuta `scripts/prerender.mjs`. Genera el contenido completo en `dist/index.html` (español) y `dist/en/index.html` (inglés). React hidrata ese HTML para activar las pestañas y el zoom. Los enlaces de idioma son URLs rastreables; cada versión tiene metadatos propios, canonical, hreflang y datos estructurados.
-
-`src/product.ts` centraliza URLs, versión y metadatos. `public/sitemap.xml` contiene las dos páginas y debe actualizar su `lastmod` cuando cambie el contenido. Las imágenes visibles usan WebP sin pérdida y versiones adaptadas al tamaño de pantalla; los PNG originales se conservan para las previsualizaciones sociales.
-
-Ver [SEO.md](SEO.md) para la auditoría y los pasos de indexación después de publicar.
-
-## Automatic NauticMixxx releases
-
-Both websites use GitHub's public `releases/latest` API for `nauticsoftware/NauticMixxx`, which selects the latest published release and excludes drafts and prereleases. Publish a normal GitHub Release to update the websites; changing a Git tag or the README alone does not publish a release.
-
-- `npm run build` / `npm run dev` first run `scripts/prepare-release.mjs`. This retrieves the release and its uploaded assets into `src/lib/release/snapshot.json`. Versions, release URLs, installer names, source and checksums come from that response; no manual version edits are required.
-- The generated static HTML includes this version before JavaScript loads. `public/release-snapshot.json` is generated for inspection and is not committed.
-- After hydration, `useNauticRelease` checks GitHub from the browser, with a five-minute cache, shared requests, and refreshes while the page is visible or regains focus. Version labels, download links and `SoftwareApplication` structured data update together.
-- Missing installers point to the release page with “View downloads”; missing checksums are omitted. Only uploaded assets from the official repository are accepted. No asset filename is invented.
-- A browser API failure keeps the most recent validated response or the compiled snapshot. During local builds, an API failure uses the checked-in snapshot. CI instead stops the deployment, preserving the live site if GitHub is unavailable.
-- GitHub Actions also rebuilds and publishes hourly, so static HTML and SEO catch up without a website commit. Scheduled runs are subject to GitHub queue delays and default-branch schedule policies; browser updates continue independently.
-- `GITHUB_TOKEN` is used only in Node during CI, never shipped to the browser. The browser uses the public endpoint; API rate limits or offline access can delay refreshes.
-
-Run `npm run test:release` to verify a future release with renamed assets, missing installers, rate limits, caching, storage failures and synchronized structured data. The release integration under `src/lib/release/` is intentionally identical in both independent website repositories; keep it synchronized when changing the mechanism.
-
-Release notes use the official release title and link. Product feature descriptions and screenshots remain editorial content and should be reviewed if the product changes its capabilities.
-
-## Publicación
-
-El workflow `.github/workflows/deploy.yml` compila y publica automáticamente el contenido de `dist` en GitHub Pages después de cada push a `main`, cada hora o mediante ejecución manual. El archivo `public/CNAME` configura el dominio `nauticmixxx.nauticboy.top`.
-
-En el proveedor DNS de `nauticboy.top`, el subdominio debe tener un registro `CNAME` que apunte a `nauticstudio.github.io`.
+</details>
