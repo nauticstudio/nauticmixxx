@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { SOURCE_REPO } from './product';
+import { SOURCE_REPO, DONATE_URL } from './product';
 import { useNauticRelease } from './lib/release/useNauticRelease';
 import {
   AppWindow,
@@ -9,6 +9,7 @@ import {
   Check,
   ChevronDown,
   Code2,
+  Coffee,
   Database,
   Download,
   ExternalLink,
@@ -45,7 +46,7 @@ interface ScreenshotItem {
 
 const copy = {
   es: {
-    navAbout: 'Qué es', navFeatures: 'Funciones', navScreens: 'En acción', navDownload: 'Descargas', navFaq: 'FAQ', navCta: 'Descargar v{version}',
+    navAbout: 'Qué es', navFeatures: 'Funciones', navScreens: 'En acción', navDownload: 'Descargas', navDonate: 'Donar', navFaq: 'FAQ', navCta: 'Descargar v{version}',
     eyebrow: 'v{version} · Última versión publicada · Mixxx 2.5.6',
     titleA: 'Tu USB de Rekordbox.', titleB: 'Directo a la pista.',
     hero: 'NauticMixxx es una edición comunitaria de Mixxx 2.5.6 para macOS y Windows, con dos decks y una interfaz inspirada en la XDJ-RX3.',
@@ -159,7 +160,27 @@ const copy = {
       { q: '¿Qué pasa si desconecto el pendrive?', a: 'La sesión USB se invalida, el dispositivo desaparece del navegador y las rutas permanecen protegidas contra escritura. Para una actuación segura, detené la reproducción y expulsá el dispositivo desde el sistema antes de retirarlo.' },
       { q: '¿Qué controladoras tienen presets RX3?', a: 'Inpulse 500 tiene un mapeo dedicado. La versión 1.5 incluye presets para DDJ-400, DDJ-SX, DDJ-SX2, DDJ-SX3, DDJ-WeGO3, DDJ-FLX4 y Roland DJ-505. Su validación física está pendiente; el SX3 es experimental. El FLX6 conserva un preset limitado al navegador.' },
       { q: '¿Dónde están los últimos instaladores?', a: 'En GitHub Releases. Los botones de esta página consultan la última release publicada y enlazan sus archivos disponibles. Si falta un instalador, el enlace lleva a las descargas de la release.' },
+      { q: '¿Cómo puedo apoyar o hacer una donación al proyecto?', a: 'NauticMixxx es gratuito y open source. Podés colaborar invitando un café a través de Buy Me a Coffee (https://www.buymeacoffee.com/NauticSoftware). Las donaciones ayudan a costear servidores, adquirir más controladoras para probar nuevos presets y dedicar horas de programación. También podés colaborar reportando problemas o sugiriendo mejoras en GitHub.' },
     ],
+    donateEyebrow: 'Apoyá el proyecto',
+    donateTitle: 'Tu apoyo mantiene a NauticMixxx en movimiento.',
+    donateLead: 'NauticMixxx es un proyecto comunitario independiente, libre y gratuito. Sin publicidad, suscripciones ni rastreo.',
+    donateDescription: 'Si te sirve para practicar en casa, preparar tus sets de Rekordbox o tocar en vivo con tu laptop y controladora, podés apoyar el desarrollo invitando un café. Cada aporte ayuda a mantener el hosting, testear con más hardware DJ y dedicar horas a nuevas funciones y parches.',
+    donateCta: 'Invitame un café',
+    donateSafeNote: 'Donación segura mediante Buy Me a Coffee (tarjeta o PayPal).',
+    donatePerk1Title: 'Desarrollo activo',
+    donatePerk1Text: 'Nuevas versiones, optimizaciones de rendimiento y parches para macOS y Windows.',
+    donatePerk2Title: 'Más controladoras',
+    donatePerk2Text: 'Fondos para conseguir y calibrar físicamente hardware Pioneer, Hercules y Roland.',
+    donatePerk3Title: '100% Libre y abierto',
+    donatePerk3Text: 'El proyecto continúa siendo de código abierto bajo licencia GPL para toda la comunidad.',
+    downloadDonateTitle: '¿Te resulta útil NauticMixxx?',
+    downloadDonateText: 'Es 100% gratuito. Si querés respaldar las próximas versiones y el soporte de más hardware, podés invitar un café.',
+    downloadDonateCta: 'Invitar un café',
+    donateCoffeeShort: 'Donar',
+    floatingCoffeeTitle: 'Invitame un café en Buy Me a Coffee',
+    floatingCoffeeText: 'Invitame un café',
+    footerDonate: 'Apoyar en Buy Me a Coffee',
     footerLine: 'Software DJ libre, hecho para tocar.', creditsTitle: 'Créditos open source',
     credits: 'Adaptación GNU GPL v3.0. Motor Mixxx 2.5.6 bajo GNU GPL v2.0 o posterior. Código, parches y atribuciones disponibles públicamente.',
     disclaimerTitle: 'Marcas y relación con otros proyectos',
@@ -167,7 +188,7 @@ const copy = {
     backTop: 'Volver arriba',
   },
   en: {
-    navAbout: 'What it is', navFeatures: 'Features', navScreens: 'In action', navDownload: 'Downloads', navFaq: 'FAQ', navCta: 'Download v{version}',
+    navAbout: 'What it is', navFeatures: 'Features', navScreens: 'In action', navDownload: 'Downloads', navDonate: 'Donate', navFaq: 'FAQ', navCta: 'Download v{version}',
     eyebrow: 'v{version} · Latest published release · Mixxx 2.5.6',
     titleA: 'Your Rekordbox USB.', titleB: 'Straight to the decks.',
     hero: 'NauticMixxx is a community edition of Mixxx 2.5.6 for macOS and Windows, with two decks and an XDJ-RX3-inspired interface.',
@@ -281,7 +302,27 @@ const copy = {
       { q: 'What happens if I unplug the drive?', a: 'The USB session is invalidated, the device is removed from the browser and its paths remain write-protected. For safe performance practice, stop playback and eject the device from the operating system first.' },
       { q: 'Which controllers have RX3 presets?', a: 'Inpulse 500 has a dedicated mapping. Version 1.5 includes presets for DDJ-400, DDJ-SX, DDJ-SX2, DDJ-SX3, DDJ-WeGO3, DDJ-FLX4 and Roland DJ-505. Physical validation is pending; SX3 is experimental. FLX6 retains a browser-only preset.' },
       { q: 'Where are the latest installers?', a: 'On GitHub Releases. This page checks the latest published release and links to its available files. If an installer is missing, its link opens the release downloads.' },
+      { q: 'How can I support or donate to the project?', a: 'NauticMixxx is free and open-source. You can support development by buying me a coffee at Buy Me a Coffee (https://www.buymeacoffee.com/NauticSoftware). Donations help fund hosting, controller hardware for testing new presets, and ongoing development time. You can also help by reporting issues and sharing feedback on GitHub.' },
     ],
+    donateEyebrow: 'Support the project',
+    donateTitle: 'Your support keeps NauticMixxx moving forward.',
+    donateLead: 'NauticMixxx is an independent, free, and open-source community project. No ads, no subscriptions, no tracking.',
+    donateDescription: 'If it saves you time prepping sets, helps you practice at home, or powers your performances with laptops and DJ controllers, consider supporting development by buying me a coffee. Every donation helps cover hosting costs, acquire DJ gear for mapping tests, and dedicate time to new features and fixes.',
+    donateCta: 'Buy me a coffee',
+    donateSafeNote: 'Secure donations powered by Buy Me a Coffee (credit card or PayPal).',
+    donatePerk1Title: 'Active development',
+    donatePerk1Text: 'Regular releases, performance tuning, and stability patches for macOS and Windows.',
+    donatePerk2Title: 'More DJ controllers',
+    donatePerk2Text: 'Funding to acquire and physically calibrate Pioneer, Hercules, and Roland hardware.',
+    donatePerk3Title: '100% Free & open source',
+    donatePerk3Text: 'The project remains fully open source under the GPL license for the entire DJ community.',
+    downloadDonateTitle: 'Finding NauticMixxx useful?',
+    downloadDonateText: 'It is 100% free. If you would like to support maintenance and future releases, consider buying me a coffee.',
+    downloadDonateCta: 'Buy me a coffee',
+    donateCoffeeShort: 'Donate',
+    floatingCoffeeTitle: 'Buy me a coffee on Buy Me a Coffee',
+    floatingCoffeeText: 'Buy me a coffee',
+    footerDonate: 'Support on Buy Me a Coffee',
     footerLine: 'Free DJ software, made to perform.', creditsTitle: 'Open-source credits',
     credits: 'Adaptation under GNU GPL v3.0. Mixxx 2.5.6 engine under GNU GPL v2.0 or later. Code, patches and attributions are publicly available.',
     disclaimerTitle: 'Trademarks and project relationships',
@@ -461,8 +502,29 @@ export default function App({ initialLanguage = 'es' }: { initialLanguage?: Lang
     <div className="grain" aria-hidden="true" />
     <header className="site-header">
       <a className="brand" href="#top" aria-label="NauticMixxx — home"><img src="/icons/nauticmixxx-64.png" srcSet="/icons/nauticmixxx-64.png 64w, /icons/nauticmixxx-128.png 128w" sizes="38px" width="38" height="38" alt="" /><span>NauticMixxx</span></a>
-      <nav aria-label={language === 'es' ? 'Navegación principal' : 'Main navigation'}><a href="#about">{t.navAbout}</a><a href="#features">{t.navFeatures}</a><a href="#screens">{t.navScreens}</a><a href="#download">{t.navDownload}</a><a href="#faq">{t.navFaq}</a></nav>
-      <div className="header-actions"><a className="language-button" href={language === 'es' ? '/en/' : '/'} hrefLang={language === 'es' ? 'en' : 'es'} lang={language === 'es' ? 'en' : 'es'} aria-label={language === 'es' ? 'Switch to English' : 'Cambiar a español'}>{language === 'es' ? 'EN' : 'ES'}</a><a className="header-cta" href="#download">{t.navCta}<ArrowDown size={14} /></a></div>
+      <nav aria-label={language === 'es' ? 'Navegación principal' : 'Main navigation'}>
+        <a href="#about">{t.navAbout}</a>
+        <a href="#features">{t.navFeatures}</a>
+        <a href="#screens">{t.navScreens}</a>
+        <a href="#download">{t.navDownload}</a>
+        <a href="#donate">{t.navDonate}</a>
+        <a href="#faq">{t.navFaq}</a>
+      </nav>
+      <div className="header-actions">
+        <a
+          className="header-coffee-btn"
+          href={DONATE_URL}
+          target="_blank"
+          rel="noreferrer"
+          title={t.floatingCoffeeTitle}
+          aria-label={t.floatingCoffeeTitle}
+        >
+          <Coffee size={14} />
+          <span>{t.donateCoffeeShort}</span>
+        </a>
+        <a className="language-button" href={language === 'es' ? '/en/' : '/'} hrefLang={language === 'es' ? 'en' : 'es'} lang={language === 'es' ? 'en' : 'es'} aria-label={language === 'es' ? 'Switch to English' : 'Cambiar a español'}>{language === 'es' ? 'EN' : 'ES'}</a>
+        <a className="header-cta" href="#download">{t.navCta}<ArrowDown size={14} /></a>
+      </div>
     </header>
     <main>
       <section className="hero hero--release">
@@ -583,6 +645,17 @@ export default function App({ initialLanguage = 'es' }: { initialLanguage?: Lang
           <article className="download-card"><div className="download-platform"><Monitor size={24} /><span>{t.winFormat}</span></div><h3>{t.winTitle}</h3><p className="download-meta">{t.winMeta}</p><a className="download-active" href={release.windows?.url ?? release.page}><Download size={17} />{t.winDownload}</a><p className="download-note">{t.winNote}</p></article>
           <article className="download-card download-card--source"><div className="download-platform"><Terminal size={24} /><span>{t.sourceFormat}</span></div><h3>{t.sourceTitle}</h3><p className="download-meta">{t.sourceMeta}</p><a className="download-active" href={release.source.url}><Download size={17} />{t.sourceDownload}</a><a className="download-code-link" href={release.sourceTag} target="_blank" rel="noreferrer">{t.browseCode}<ExternalLink size={13} /></a><p className="download-note">{t.sourceNote}</p></article>
         </div>
+        <div className="download-donate-banner">
+          <div className="download-donate-icon"><Coffee size={22} /></div>
+          <div className="download-donate-body">
+            <h4>{t.downloadDonateTitle}</h4>
+            <p>{t.downloadDonateText}</p>
+          </div>
+          <a className="button button--coffee" href={DONATE_URL} target="_blank" rel="noreferrer">
+            <Coffee size={15} />
+            <span>{t.downloadDonateCta}</span>
+          </a>
+        </div>
         <div className="release-honesty"><ShieldCheck size={18} /><p>{t.releaseNote}</p></div>
         <div className="evidence-links evidence-links--downloads"><a href={release.page} target="_blank" rel="noreferrer">{t.releaseLink}<ExternalLink size={14} /></a>{release.checksums && <a href={release.checksums} target="_blank" rel="noreferrer">{t.checksumsLink}<ExternalLink size={14} /></a>}</div>
       </section>
@@ -593,15 +666,108 @@ export default function App({ initialLanguage = 'es' }: { initialLanguage?: Lang
         <div className="evidence-links"><a href={release.installationGuide} target="_blank" rel="noreferrer">{t.installationLink}<ExternalLink size={14} /></a><a href={`${SOURCE_REPO}/issues`} target="_blank" rel="noreferrer">{t.supportLink}<ExternalLink size={14} /></a></div>
       </section>
 
+      <section className="donate section" id="donate">
+        <div className="donate-container">
+          <div className="donate-heading">
+            <p className="section-eyebrow"><Coffee size={14} />{t.donateEyebrow}</p>
+            <h2>{t.donateTitle}</h2>
+            <p className="donate-lead">{t.donateLead}</p>
+            <p className="donate-desc">{t.donateDescription}</p>
+          </div>
+          <div className="donate-card">
+            <div className="donate-card-glow" aria-hidden="true" />
+            <div className="donate-card-main">
+              <div className="donate-badge">
+                <Coffee size={14} />
+                <span>BUY ME A COFFEE</span>
+              </div>
+              <h3>{language === 'es' ? 'Invitá un café a NauticMixxx' : 'Buy NauticMixxx a coffee'}</h3>
+              <p>
+                {language === 'es'
+                  ? 'Tu aporte ayuda a cubrir servidores, adquirir más controladoras para probar nuevos presets y dedicar tiempo al desarrollo continuo.'
+                  : 'Your contribution helps fund servers, acquire more controllers for testing presets, and dedicate time to ongoing development.'}
+              </p>
+              <div className="donate-button-wrapper">
+                <a
+                  href={DONATE_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="bmc-button-img-link"
+                  title="Buy me a coffee"
+                >
+                  <img
+                    src="https://img.buymeacoffee.com/button-api/?text=Buy me a Coffe&emoji=☕&slug=NauticSoftware&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"
+                    alt="Buy me a coffee"
+                    width="217"
+                    height="51"
+                    loading="lazy"
+                  />
+                </a>
+                <span className="donate-note">{t.donateSafeNote}</span>
+              </div>
+            </div>
+            <div className="donate-perks">
+              <div className="donate-perk">
+                <span className="donate-perk-icon"><Coffee size={17} /></span>
+                <div>
+                  <h4>{t.donatePerk1Title}</h4>
+                  <p>{t.donatePerk1Text}</p>
+                </div>
+              </div>
+              <div className="donate-perk">
+                <span className="donate-perk-icon"><SlidersHorizontal size={17} /></span>
+                <div>
+                  <h4>{t.donatePerk2Title}</h4>
+                  <p>{t.donatePerk2Text}</p>
+                </div>
+              </div>
+              <div className="donate-perk">
+                <span className="donate-perk-icon"><ShieldCheck size={17} /></span>
+                <div>
+                  <h4>{t.donatePerk3Title}</h4>
+                  <p>{t.donatePerk3Text}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="faq section" id="faq">
         <div className="faq-heading"><p className="section-eyebrow">{t.faqEyebrow}</p><h2>{t.faqTitle}</h2></div>
         <div className="faq-list">{t.faqs.map((item, index) => <details key={item.q} open={index === 0}><summary><span>0{index + 1}</span>{item.q}<ChevronDown size={18} /></summary><p>{item.a}</p></details>)}</div>
       </section>
     </main>
     <footer className="site-footer">
-      <div className="footer-top"><a className="brand" href="#top"><img src="/icons/nauticmixxx-64.png" srcSet="/icons/nauticmixxx-64.png 64w, /icons/nauticmixxx-128.png 128w" sizes="38px" width="38" height="38" alt="" loading="lazy" /><span>NauticMixxx</span></a><p>{t.footerLine}</p><a href="#top">{t.backTop}<ArrowRight size={14} /></a></div>
-      <div className="footer-legal"><div><h3>{t.creditsTitle}</h3><p>{t.credits}</p><a href={release.license} target="_blank" rel="noreferrer">LICENSE.md <ExternalLink size={12} /></a></div><div><h3>{t.disclaimerTitle}</h3><p>{t.disclaimer}</p><a href={release.trademarks} target="_blank" rel="noreferrer">TRADEMARKS.md <ExternalLink size={12} /></a></div></div>
+      <div className="footer-top">
+        <a className="brand" href="#top"><img src="/icons/nauticmixxx-64.png" srcSet="/icons/nauticmixxx-64.png 64w, /icons/nauticmixxx-128.png 128w" sizes="38px" width="38" height="38" alt="" loading="lazy" /><span>NauticMixxx</span></a>
+        <div className="footer-center">
+          <p>{t.footerLine}</p>
+          <a href={DONATE_URL} target="_blank" rel="noreferrer" className="footer-coffee-link">
+            <Coffee size={13} />
+            <span>{t.footerDonate}</span>
+            <ExternalLink size={11} />
+          </a>
+        </div>
+        <a href="#top">{t.backTop}<ArrowRight size={14} /></a>
+      </div>
+      <div className="footer-legal">
+        <div><h3>{t.creditsTitle}</h3><p>{t.credits}</p><a href={release.license} target="_blank" rel="noreferrer">LICENSE.md <ExternalLink size={12} /></a></div>
+        <div><h3>{t.disclaimerTitle}</h3><p>{t.disclaimer}</p><a href={release.trademarks} target="_blank" rel="noreferrer">TRADEMARKS.md <ExternalLink size={12} /></a></div>
+      </div>
     </footer>
+
+    <a
+      href={DONATE_URL}
+      target="_blank"
+      rel="noreferrer"
+      className="floating-coffee"
+      aria-label={t.floatingCoffeeTitle}
+      title={t.floatingCoffeeTitle}
+    >
+      <span className="floating-coffee-icon" aria-hidden="true">☕</span>
+      <span className="floating-coffee-text">{t.floatingCoffeeText}</span>
+    </a>
 
     {zoomOpen && (
       <div

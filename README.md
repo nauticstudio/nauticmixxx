@@ -1,10 +1,10 @@
-# NauticMixxx Web
+# NauticMixxx
 
 ## Your Rekordbox USB. Straight to the dancefloor.
 
 NauticMixxx is an open-source DJ application for macOS and Windows, based on Mixxx 2.5.6 and featuring an interface inspired by the XDJ-RX3. Plug in a Rekordbox-exported USB drive, browse your playlists, and load tracks onto two decks to practice or prepare your next set.
 
-**[Visit Website](https://nauticmixxx.nauticboy.top/) · [English](https://nauticmixxx.nauticboy.top/en/) · [Download NauticMixxx](https://github.com/nauticsoftware/NauticMixxx/releases/latest)**
+**[Visit Website](https://nauticmixxx.nauticboy.top/) · [English](https://nauticmixxx.nauticboy.top/en/) · [Download NauticMixxx](https://github.com/nauticsoftware/NauticMixxx/releases/latest) · [Donate (Buy Me a Coffee)](https://www.buymeacoffee.com/NauticSoftware)**
 
 ![NauticMixxx playing two tracks with waveforms and Hot Cues](public/media/nauticmixxx-waveforms-playing.webp)
 
@@ -82,6 +82,12 @@ The Hercules Inpulse 500 has a dedicated mapping. The website also provides pres
 
 On [GitHub Releases](https://github.com/nauticsoftware/NauticMixxx/releases/latest). If a release does not include a prebuilt installer for your platform, the website directs you to its available downloads.
 
+## Support development
+
+NauticMixxx is an independent, open-source project. If the application helps you practice, prep your sets, or perform live, you can support ongoing development, hosting, and testing with new controllers by buying me a coffee:
+
+[![Buy Me A Coffee](https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=%E2%98%95&slug=NauticSoftware&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff)](https://www.buymeacoffee.com/NauticSoftware)
+
 ## Open Source & Credits
 
 NauticMixxx is an independent community project. The adaptation is distributed under GNU GPL v3.0, and the Mixxx 2.5.6 engine is under GNU GPL v2.0 or later. The [NauticMixxx project](https://github.com/nauticsoftware/NauticMixxx) publishes the source code, patches, and attributions.
@@ -92,3 +98,11 @@ It is not affiliated with, sponsored by, certified, or endorsed by AlphaTheta, P
 <summary>Website development</summary>
 
 The website is built with React and Vite, with content available in English and Spanish.
+
+```bash
+npm install
+npm run dev
+npm run build
+```
+
+</details>

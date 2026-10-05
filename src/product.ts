@@ -10,6 +10,7 @@ export const RELEASE_PAGE = CURRENT_RELEASE.page;
 export const MAC_DOWNLOAD = CURRENT_RELEASE.mac?.url;
 export const WINDOWS_DOWNLOAD = CURRENT_RELEASE.windows?.url;
 export const INSTALLATION_GUIDE = CURRENT_RELEASE.installationGuide;
+export const DONATE_URL = 'https://www.buymeacoffee.com/NauticSoftware';
 
 export const PAGE_SEO = {
   es: {
