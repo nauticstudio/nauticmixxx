@@ -1,102 +1,94 @@
-# NauticMixxx Web
+# NauticMixxx
 
-## Tu USB de Rekordbox. Directo a la pista.
+## Your Rekordbox USB. Straight to the dancefloor.
 
-NauticMixxx es una aplicación DJ de código abierto para macOS y Windows, basada en Mixxx 2.5.6 y con una interfaz inspirada en la XDJ-RX3. Conectá un USB exportado por Rekordbox, navegá tus playlists y cargá pistas en dos decks para practicar o preparar tu próximo set.
+NauticMixxx is an open-source DJ application for macOS and Windows, based on Mixxx 2.5.6 and featuring an interface inspired by the XDJ-RX3. Plug in a Rekordbox-exported USB drive, browse your playlists, and load tracks onto two decks to practice or prepare your next set.
 
-**[Visitar la web](https://nauticmixxx.nauticboy.top/) · [English](https://nauticmixxx.nauticboy.top/en/) · [Descargar NauticMixxx](https://github.com/nauticsoftware/NauticMixxx/releases/latest)**
+**[Visit Website](https://nauticmixxx.nauticboy.top/) · [English](https://nauticmixxx.nauticboy.top/en/) · [Download NauticMixxx](https://github.com/nauticsoftware/NauticMixxx/releases/latest)**
 
-![NauticMixxx reproduciendo dos pistas con formas de onda y Hot Cues](public/media/nauticmixxx-waveforms-playing.webp)
+![NauticMixxx playing two tracks with waveforms and Hot Cues](public/media/nauticmixxx-waveforms-playing.webp)
 
-**USB en modo lectura · Sin escaneo local · Sin registro · Código abierto**
+**Read-only USB · No local library scan · No registration · Open source**
 
-## Preparaste el set una vez. Usalo en todas partes.
+## Prepare your set once. Play it anywhere.
 
-La web presenta un flujo de trabajo pensado para DJs que preparan su música en Rekordbox y quieren usar esa preparación en una computadora con controladoras DJ.
+The website presents a workflow designed for DJs who prepare their music in Rekordbox and want to bring that preparation to a computer with DJ controllers.
 
-- **Lectura directa del USB.** Navegación del catálogo y las playlists exportadas por Rekordbox, sin importar las pistas a la colección local.
-- **Tu preparación, a la vista.** Formas de onda, beatgrid, overviews y hasta ocho Hot Cues por deck.
-- **Dos decks para mezclar.** Tiempo restante, BPM, tempo y controles de reproducción, junto con la sección Beat FX.
-- **Control desde el hardware.** Mapeo dedicado para Hercules Inpulse 500 y presets RX3 para distintas controladoras Pioneer y Roland.
-- **Descargas y documentación.** Acceso a instaladores, código fuente, notas de versión, guías e informes de pruebas publicados en GitHub.
+- **Direct USB reading.** Browse your Rekordbox-exported catalog and playlists without importing tracks into the local library.
+- **Your prep work, front and center.** Waveforms, beatgrids, track overviews, and up to eight Hot Cues per deck.
+- **Two mixing decks.** Remaining time, BPM, tempo, and playback controls, along with the Beat FX section.
+- **Hardware control.** Dedicated mapping for Hercules Inpulse 500 and RX3 presets for various Pioneer and Roland controllers.
+- **Downloads and documentation.** Access installers, source code, release notes, guides, and test reports published on GitHub.
 
-## La interfaz en acción
+## The interface in action
 
-En la web podés ver la reproducción y la navegación como animaciones continuas, en bucle y sin sonido. También podés recorrer las capturas y ampliarlas para observar los detalles de la interfaz.
+On the website, you can view playback and navigation as continuous, silent looping animations. You can also explore the screenshots and zoom in to inspect interface details.
 
-[Explorar la galería y las animaciones](https://nauticmixxx.nauticboy.top/#screens)
+[Explore the gallery and animations](https://nauticmixxx.nauticboy.top/#screens)
 
-| Navegador Rekordbox | Mezcla y formas de onda |
+| Rekordbox Browser | Mixing & Waveforms |
 | --- | --- |
-| ![Playlists y previsualización de pistas](public/media/nauticmixxx-browser.webp) | ![Dos decks durante una mezcla](public/media/nauticmixxx-waveforms-mixing.webp) |
-| Playlists, pistas y previews de formas de onda. | Beatgrid, tempo y formas de onda de ambos decks. |
+| ![Playlists and track preview](public/media/nauticmixxx-browser.webp) | ![Two decks during a mix](public/media/nauticmixxx-waveforms-mixing.webp) |
+| Playlists, tracks, and waveform previews. | Beatgrid, tempo, and waveforms for both decks. |
 
-### Antes de cargar las pistas
+### Before loading tracks
 
-![Pantalla de inicio de NauticMixxx con ambos decks vacíos](public/media/nauticmixxx-empty-decks.webp)
+![NauticMixxx home screen with both decks empty](public/media/nauticmixxx-empty-decks.webp)
 
-### Los controles de los dos decks
+### Dual-deck controls
 
-![Detalle de tiempo restante, tempo, BPM y Hot Cues](public/media/nauticmixxx-decks-overview.webp)
+![Detail of remaining time, tempo, BPM, and Hot Cues](public/media/nauticmixxx-decks-overview.webp)
 
-## Tu USB permanece intacto
+## Your USB remains untouched
 
-El flujo USB está diseñado para operar en modo lectura. NauticMixxx no reescribe el audio, los metadatos, las playlists ni los análisis del dispositivo, y mantiene su catálogo como una sesión transitoria.
+The USB workflow is designed to operate in read-only mode. NauticMixxx does not rewrite audio files, metadata, playlists, or analysis data on the drive, maintaining its catalog as a transient session.
 
-La colección local queda fuera de este navegador. Conservá una copia de seguridad de tu USB de trabajo y detené la reproducción antes de expulsarlo desde el sistema operativo.
+The local library remains outside of this browser. Keep a backup of your working USB drive and stop playback before ejecting it from your operating system.
 
-## Descargá NauticMixxx
+## Download NauticMixxx
 
-La web muestra la última versión publicada en GitHub y enlaza los archivos disponibles de esa release.
+The website displays the latest release published on GitHub and links to the available files for that release.
 
-| Plataforma | Descarga |
+| Platform | Download |
 | --- | --- |
-| macOS Apple Silicon | Instalador para ARM64. |
-| Windows x64 | Instalador nativo para Windows. |
-| Código fuente | Fuentes para compilar y revisar el proyecto. |
+| macOS Apple Silicon | ARM64 installer. |
+| Windows x64 | Native Windows installer. |
+| Source code | Source files to build and review the project. |
 
-**[Ver la última release y sus descargas](https://github.com/nauticsoftware/NauticMixxx/releases/latest)**
+**[View the latest release and downloads](https://github.com/nauticsoftware/NauticMixxx/releases/latest)**
 
-Desde la sección de descargas también podés consultar las notas de versión, el informe de pruebas y los checksums cuando estén disponibles. Revisá las indicaciones de instalación de cada release: las builds comunitarias pueden mostrar avisos de seguridad del sistema.
+From the downloads section, you can also review release notes, test reports, and checksums when available. Please check the installation instructions for each release: community builds may trigger operating system security warnings.
 
-## Cómo empezar
+## Getting started
 
-1. **Instalá la aplicación.** Descargá el instalador correspondiente a tu sistema desde la última release.
-2. **Configurá la salida de audio.** Elegí tu dispositivo y los canales en `Preferences → Sound Hardware`. Si usás una controladora, revisá su configuración en `Controllers`.
-3. **Conectá tu USB exportado por Rekordbox.** Esperá a que termine de cargar el catálogo y abrí `SOURCE`.
-4. **Navegá y cargá una pista.** Seleccioná una playlist, pulsá `ENTER` para abrir sus pistas y usá `LOAD 1/2` para cargar el deck correspondiente.
+1. **Install the application.** Download the installer for your operating system from the latest release.
+2. **Configure audio output.** Select your device and channels in `Preferences → Sound Hardware`. If using a controller, configure it under `Controllers`.
+3. **Connect your Rekordbox-exported USB drive.** Wait for the catalog to finish loading and open `SOURCE`.
+4. **Browse and load a track.** Select a playlist, press `ENTER` to view its tracks, and use `LOAD 1/2` to load the corresponding deck.
 
-La web incluye enlaces a la guía de instalación, la guía de controladoras y el [canal de soporte en GitHub](https://github.com/nauticsoftware/NauticMixxx/issues).
+The website includes links to the installation guide, controller guide, and the [GitHub support channel](https://github.com/nauticsoftware/NauticMixxx/issues).
 
-## Preguntas frecuentes
+## Frequently Asked Questions
 
-**¿NauticMixxx se instala en una Pioneer XDJ-RX3?**
+**Does NauticMixxx install directly on a Pioneer XDJ-RX3?**
 
-Se ejecuta en tu computadora. No se instala en equipos Pioneer ni modifica su firmware.
+It runs on your computer. It does not install on Pioneer hardware or modify its firmware.
 
-**¿Qué controladoras se presentan en la web?**
+**Which controllers are featured on the website?**
 
-Hercules Inpulse 500 tiene un mapeo dedicado. La web también presenta presets para DDJ-400, DDJ-SX, DDJ-SX2, DDJ-SX3, DDJ-WeGO3, DDJ-FLX4 y Roland DJ-505. La validación física de esos presets está pendiente; SX3 es experimental. Consultá la guía y el informe de pruebas de la release para conocer sus límites.
+The Hercules Inpulse 500 has a dedicated mapping. The website also provides presets for DDJ-400, DDJ-SX, DDJ-SX2, DDJ-SX3, DDJ-WeGO3, DDJ-FLX4, and Roland DJ-505. Physical testing for these presets is pending; SX3 is experimental. Refer to the release guide and test report to check their current limitations.
 
-**¿Dónde encuentro los instaladores actualizados?**
+**Where can I find the latest installers?**
 
-En [GitHub Releases](https://github.com/nauticsoftware/NauticMixxx/releases/latest). Si una release no incluye un instalador para tu plataforma, la web lleva a sus descargas disponibles.
+On [GitHub Releases](https://github.com/nauticsoftware/NauticMixxx/releases/latest). If a release does not include a prebuilt installer for your platform, the website directs you to its available downloads.
 
-## Software libre y créditos
+## Open Source & Credits
 
-NauticMixxx es un proyecto comunitario independiente. La adaptación se distribuye bajo GNU GPL v3.0 y el motor Mixxx 2.5.6 bajo GNU GPL v2.0 o posterior. El [proyecto de NauticMixxx](https://github.com/nauticsoftware/NauticMixxx) publica el código, los parches y las atribuciones.
+NauticMixxx is an independent community project. The adaptation is distributed under GNU GPL v3.0, and the Mixxx 2.5.6 engine is under GNU GPL v2.0 or later. The [NauticMixxx project](https://github.com/nauticsoftware/NauticMixxx) publishes the source code, patches, and attributions.
 
-No está afiliado, patrocinado, certificado ni respaldado por AlphaTheta, Pioneer DJ, Hercules, rekordbox ni el proyecto Mixxx. Los nombres y marcas describen compatibilidad, procedencia técnica o flujo de trabajo.
+It is not affiliated with, sponsored by, certified, or endorsed by AlphaTheta, Pioneer DJ, Hercules, rekordbox, or the Mixxx project. Brand and product names are used solely to describe compatibility, technical origin, or workflow.
 
 <details>
-<summary>Desarrollo de la web</summary>
+<summary>Website development</summary>
 
-La web está construida con React y Vite, con contenido en español e inglés.
-
-```bash
-npm install
-npm run dev
-npm run build
-```
-
-</details>
+The website is built with React and Vite, with content available in English and Spanish.
