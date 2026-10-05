@@ -1,4 +1,4 @@
-# NauticMixxx
+# NauticMixxx Web
 
 ## Your Rekordbox USB. Straight to the dancefloor.
 
