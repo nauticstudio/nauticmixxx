@@ -673,19 +673,54 @@ details[open] > summary svg:last-child {
   border-radius: var(--radius);
   box-shadow: inset 0 1px 0 #ffffff08;
 }
-.download-card > svg {
-  color: #ff7800;
+
+.platform-logo {
+  width: 32px;
+  height: 32px;
   margin-bottom: 20px;
+  object-fit: contain;
 }
-.download-card:nth-child(2) > svg {
-  color: var(--cyan);
+.platform-logo--mac {
+  filter: invert(1);
 }
-.download-card:nth-child(2) .button {
-  background: var(--blue);
+.platform-cta--mac,
+.platform-cta--windows {
+  display: none;
+}
+html[data-desktop-os="mac"] .platform-cta--mac,
+html[data-desktop-os="windows"] .platform-cta--windows {
+  display: inline-flex;
+}
+html[data-desktop-os="mac"] .platform-cta--other,
+html[data-desktop-os="windows"] .platform-cta--other,
+html[data-desktop-os="mac"] .download-grid .download-card--windows,
+html[data-desktop-os="windows"] .download-grid .download-card--mac {
+  display: none;
+}
+html[data-desktop-os="mac"] .download-grid,
+html[data-desktop-os="windows"] .download-grid {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 430px;
+}
+.button.platform-brand-button--mac {
+  background: #f5f5f7;
+  color: #000000;
+}
+.button.platform-brand-button--mac:hover {
+  background: #dcdce0;
+}
+.button.platform-brand-button--windows {
+  background: #0078d4;
   color: #ffffff;
 }
-.download-card:nth-child(2) .button:hover {
-  background: #0046c4;
+.button.platform-brand-button--windows:hover {
+  background: #0067b7;
+}
+.platform-brand-button--windows img {
+  filter: brightness(0) invert(1);
+}
+.platform-brand-button img {
+  flex-shrink: 0;
 }
 .download-card h3 {
   font-size: 29px;
@@ -1152,16 +1187,7 @@ details[open] > summary svg:last-child {
   .download-card {
     padding: 26px;
   }
-  .download-card:nth-child(2) > svg {
-    color: var(--cyan);
-  }
-  .download-card:nth-child(2) .button {
-    background: var(--blue);
-    color: #ffffff;
-  }
-  .download-card:nth-child(2) .button:hover {
-    background: #0046c4;
-  }
+
   .download-card h3 {
     font-size: 26px;
   }
@@ -1366,5 +1392,16 @@ details[open] > summary svg:last-child {
   *::after {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .header-actions .platform-cta--mac span,
+  .header-actions .platform-cta--windows span {
+    display: none;
+  }
+  .header-actions .platform-brand-button {
+    width: 40px;
+    padding-inline: 0;
   }
 }

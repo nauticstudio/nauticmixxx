@@ -8,9 +8,7 @@ import {
   Download,
   ExternalLink,
   Headphones,
-  Laptop,
   Menu,
-  Monitor,
   Play,
   ShieldCheck,
   SlidersHorizontal,
@@ -515,8 +513,27 @@ export default function App({
             >
               {initialLanguage === "es" ? "EN" : "ES"}
             </a>
-            <a className="button button-small" href="#download">
+            <a
+              className="button button-small platform-cta platform-cta--other"
+              href="#download"
+            >
               <Download size={15} />
+              <span>{initialLanguage === "es" ? "Descargar" : "Download"}</span>
+            </a>
+            <a
+              className="button button-small platform-cta platform-cta--mac platform-brand-button platform-brand-button--mac"
+              href="#download"
+              aria-label={t.macDownload}
+            >
+              <img src="/icons/apple.svg" width="16" height="16" alt="" />
+              <span>{initialLanguage === "es" ? "Descargar" : "Download"}</span>
+            </a>
+            <a
+              className="button button-small platform-cta platform-cta--windows platform-brand-button platform-brand-button--windows"
+              href="#download"
+              aria-label={t.windowsDownload}
+            >
+              <img src="/icons/windows.svg" width="16" height="16" alt="" />
               <span>{initialLanguage === "es" ? "Descargar" : "Download"}</span>
             </a>
             <button
@@ -745,25 +762,40 @@ export default function App({
               </a>
             </div>
             <div className="download-grid">
-              <article className="download-card">
-                <Laptop size={32} strokeWidth={1.4} />
+              <article className="download-card download-card--mac">
+                <img
+                  className="platform-logo platform-logo--mac"
+                  src="/icons/apple.svg"
+                  width="32"
+                  height="32"
+                  alt=""
+                />
                 <h3>macOS</h3>
                 <p className="platform-meta">{t.mac}</p>
-                <a className="button" href={release.mac?.url ?? release.page}>
-                  <Download size={17} />
+                <a
+                  className="button platform-brand-button platform-brand-button--mac"
+                  href={release.mac?.url ?? release.page}
+                >
+                  <img src="/icons/apple.svg" width="18" height="18" alt="" />
                   {release.mac ? t.macDownload : t.fallback}
                 </a>
                 <p className="download-note">{t.macNote}</p>
               </article>
-              <article className="download-card">
-                <Monitor size={32} strokeWidth={1.4} />
+              <article className="download-card download-card--windows">
+                <img
+                  className="platform-logo"
+                  src="/icons/windows.svg"
+                  width="32"
+                  height="32"
+                  alt=""
+                />
                 <h3>Windows</h3>
                 <p className="platform-meta">{t.windows}</p>
                 <a
-                  className="button"
+                  className="button platform-brand-button platform-brand-button--windows"
                   href={release.windows?.url ?? release.page}
                 >
-                  <Download size={17} />
+                  <img src="/icons/windows.svg" width="18" height="18" alt="" />
                   {release.windows ? t.windowsDownload : t.fallback}
                 </a>
                 <p className="download-note">{t.windowsNote}</p>
@@ -795,6 +827,14 @@ export default function App({
                 </summary>
                 <div className="detail-content">
                   <div className="resource-links">
+                    <a href={release.mac?.url ?? release.page}>
+                      {t.macDownload}
+                      <ArrowDown size={14} />
+                    </a>
+                    <a href={release.windows?.url ?? release.page}>
+                      {t.windowsDownload}
+                      <ArrowDown size={14} />
+                    </a>
                     <a href={release.source.url}>
                       {t.source}
                       <ArrowDown size={14} />

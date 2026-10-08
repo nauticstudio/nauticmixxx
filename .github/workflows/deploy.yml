@@ -36,6 +36,9 @@ jobs:
       - name: Test release synchronization
         run: npm run test:release
 
+      - name: Test operating system detection
+        run: npm run test:platform
+
       - name: Build
         run: npm run build
         env:

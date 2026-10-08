@@ -57,7 +57,7 @@ The website displays the latest release published on GitHub and links to the ava
 
 **[View the latest release and downloads](https://github.com/nauticsoftware/NauticMixxx/releases/latest)**
 
-Mac and Windows downloads are the primary actions. Expand “More downloads and release details” for source files, release notes, test reports, checksums, and the experimental Linux build guide. Installation help is available alongside the downloads.
+The download section and navigation button automatically match the visitor’s desktop system, with monochrome Apple branding or Windows blue. Other systems show both downloads, and both installers remain accessible under the release details. macOS downloads require Apple Silicon. Expand “More downloads and release details” for source files, release notes, test reports, checksums, and the experimental Linux build guide. Installation help is available alongside the downloads.
 
 ## Getting started
 
@@ -96,6 +96,8 @@ It is not affiliated with, sponsored by, certified, or endorsed by AlphaTheta, P
 
 <details>
 <summary>Website development</summary>
+
+The Apple and Windows logo silhouettes are bundled locally from [Simple Icons v11](https://github.com/simple-icons/simple-icons/tree/11.0.0/icons).
 
 The website is built with React and Vite, with prerendered content in English and Spanish. The responsive design uses a premium dark theme, readable typography, orange accents (#FF7800 / #F84418), blue details (#0051E1 / #027CC8), and distinct charcoal (#202020) and black surfaces. Navigation, downloads, setup instructions, FAQs, and optional project support focus on everyday DJ use. The mobile menu, directly visible screenshots, native modal dialog, reduced-motion support, and on-demand video playback preserve accessibility and keep the page lightweight.
 

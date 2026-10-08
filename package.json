@@ -10,7 +10,8 @@
     "lint": "tsc --noEmit",
     "prebuild": "node scripts/prepare-release.mjs",
     "predev": "node scripts/prepare-release.mjs",
-    "test:release": "node --test scripts/release.test.mjs"
+    "test:release": "node --test scripts/release.test.mjs",
+    "test:platform": "node --test scripts/platform.test.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^5.0.4",
