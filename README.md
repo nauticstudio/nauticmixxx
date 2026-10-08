@@ -22,7 +22,7 @@ The website presents a workflow designed for DJs who prepare their music in Reko
 
 ## The interface in action
 
-On the website, you can view playback and navigation as continuous, silent looping animations. You can also explore the screenshots and zoom in to inspect interface details.
+The website includes different screenshots distributed throughout the page and optional playback and browsing demos with standard video controls. Videos load on demand. Screenshots can be expanded in a keyboard-accessible dialog.
 
 [Explore the gallery and animations](https://nauticmixxx.nauticboy.top/#screens)
 
@@ -57,7 +57,7 @@ The website displays the latest release published on GitHub and links to the ava
 
 **[View the latest release and downloads](https://github.com/nauticsoftware/NauticMixxx/releases/latest)**
 
-From the downloads section, you can also review release notes, test reports, and checksums when available. Please check the installation instructions for each release: community builds may trigger operating system security warnings.
+Mac and Windows downloads are the primary actions. Expand “More downloads and release details” for source files, release notes, test reports, checksums, and the experimental Linux build guide. Installation help is available alongside the downloads.
 
 ## Getting started
 
@@ -97,7 +97,7 @@ It is not affiliated with, sponsored by, certified, or endorsed by AlphaTheta, P
 <details>
 <summary>Website development</summary>
 
-The website is built with React and Vite, with content available in English and Spanish.
+The website is built with React and Vite, with prerendered content in English and Spanish. The responsive design uses a premium dark theme, readable typography, orange accents (#FF7800 / #F84418), blue details (#0051E1 / #027CC8), and distinct charcoal (#202020) and black surfaces. Navigation, downloads, setup instructions, FAQs, and optional project support focus on everyday DJ use. The mobile menu, directly visible screenshots, native modal dialog, reduced-motion support, and on-demand video playback preserve accessibility and keep the page lightweight.
 
 ```bash
 npm install
